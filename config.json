@@ -1,0 +1,12 @@
+{
+  "elementosPorJugador": 5,
+  "tipoIA": "ESTRATEGICA",
+  "reglasDanio": [
+    {"atacante": "AGUA", "defensor": "FUEGO", "danio": 50.0},
+    {"atacante": "FUEGO", "defensor": "AGUA", "danio": 20.0},
+    {"atacante": "TIERRA", "defensor": "FUEGO", "danio": 20.0},
+    {"atacante": "FUEGO", "defensor": "TIERRA", "danio": 40.0},
+    {"atacante": "AGUA", "defensor": "TIERRA", "danio": 30.0},
+    {"atacante": "TIERRA", "defensor": "AGUA", "danio": 50.0}
+  ]
+}
