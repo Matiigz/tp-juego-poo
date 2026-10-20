@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btnDificultadSuperIA, &QPushButton::clicked, this, &MainWindow::onDificultadSuperIAClicked);
     connect(ui->btnContinuarJuego, &QPushButton::clicked, this, &MainWindow::onContinuarJuegoClicked);
     connect(ui->btnVolverDificultad, &QPushButton::clicked, this, &MainWindow::onVolverDificultadClicked);
-
+    connect(ui->btnSalir, &QPushButton::clicked, this, &MainWindow::close);
     connect(ui->btnAtacar, &QPushButton::clicked, this, &MainWindow::onAtacarClicked);
     connect(ui->btnOpciones, &QPushButton::clicked, this, &MainWindow::onOpcionesClicked);
     connect(ui->btnGuardarFin, &QPushButton::clicked, this, &MainWindow::onGuardarFinClicked);
@@ -232,3 +232,8 @@ void MainWindow::onGuardarFinClicked() {
 void MainWindow::onVolverMenuClicked() {
     ui->stackedWidget->setCurrentWidget(ui->pageInicio);
 }
+void MainWindow::on_pushButton_clicked()
+{
+
+}
+
