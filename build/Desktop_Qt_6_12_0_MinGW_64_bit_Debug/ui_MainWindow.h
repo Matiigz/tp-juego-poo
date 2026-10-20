@@ -82,6 +82,9 @@ public:
         stackedWidget->setObjectName("stackedWidget");
         pageInicio = new QWidget();
         pageInicio->setObjectName("pageInicio");
+        pageInicio->setStyleSheet(QString::fromUtf8("#pageInicio {\n"
+"    border-image: url(:/imagenes/cc70f896-a6ee-4185-a978-6fd627721f1e.png) 0 0 0 0 stretch stretch;\n"
+"}"));
         verticalLayout_2 = new QVBoxLayout(pageInicio);
         verticalLayout_2->setObjectName("verticalLayout_2");
         verticalSpacer = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
@@ -91,9 +94,10 @@ public:
         lblTitulo = new QLabel(pageInicio);
         lblTitulo->setObjectName("lblTitulo");
         QFont font;
-        font.setPointSize(24);
+        font.setPointSize(36);
         font.setBold(true);
         lblTitulo->setFont(font);
+        lblTitulo->setStyleSheet(QString::fromUtf8("\302\241<span style=\"color: #2980b9;\">Agua</span>, <span style=\"color: #27ae60;\">Tierra</span> y <span style=\"color: #c0392b;\">Fuego</span>!"));
         lblTitulo->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_2->addWidget(lblTitulo);
@@ -104,24 +108,40 @@ public:
 
         btnIniciarJuego = new QPushButton(pageInicio);
         btnIniciarJuego->setObjectName("btnIniciarJuego");
-        btnIniciarJuego->setMinimumSize(QSize(0, 50));
+        btnIniciarJuego->setMinimumSize(QSize(50, 50));
         QFont font1;
         font1.setPointSize(12);
         font1.setBold(true);
         btnIniciarJuego->setFont(font1);
+        btnIniciarJuego->setStyleSheet(QString::fromUtf8("    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */\n"
+"    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */\n"
+"    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */\n"
+"    border-radius: 10px;                        /* Bordes redondeados */\n"
+"    text-transform: uppercase;                   /* Texto en may\303\272sculas */"));
 
         verticalLayout_2->addWidget(btnIniciarJuego);
 
         btnCargarJuegoInicio = new QPushButton(pageInicio);
         btnCargarJuegoInicio->setObjectName("btnCargarJuegoInicio");
-        btnCargarJuegoInicio->setMinimumSize(QSize(0, 50));
+        btnCargarJuegoInicio->setMinimumSize(QSize(50, 50));
         btnCargarJuegoInicio->setFont(font1);
+        btnCargarJuegoInicio->setStyleSheet(QString::fromUtf8("    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */\n"
+"    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */\n"
+"    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */\n"
+"    border-radius: 10px;                        /* Bordes redondeados */\n"
+"    text-transform: uppercase;                   /* Texto en may\303\272sculas */"));
 
         verticalLayout_2->addWidget(btnCargarJuegoInicio);
 
         btnSalir = new QPushButton(pageInicio);
         btnSalir->setObjectName("btnSalir");
-        btnSalir->setStyleSheet(QString::fromUtf8("background-color: #c0392b; color: white;"));
+        btnSalir->setMinimumSize(QSize(50, 50));
+        btnSalir->setFont(font1);
+        btnSalir->setStyleSheet(QString::fromUtf8("    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */\n"
+"    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */\n"
+"    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */\n"
+"    border-radius: 10px;                        /* Bordes redondeados */\n"
+"    text-transform: uppercase;                   /* Texto en may\303\272sculas */"));
 
         verticalLayout_2->addWidget(btnSalir);
 
@@ -191,6 +211,11 @@ public:
         btnVolverDificultad = new QPushButton(pageDificultad);
         btnVolverDificultad->setObjectName("btnVolverDificultad");
         btnVolverDificultad->setMinimumSize(QSize(0, 40));
+        btnVolverDificultad->setStyleSheet(QString::fromUtf8("    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */\n"
+"    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */\n"
+"    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */\n"
+"    border-radius: 10px;                        /* Bordes redondeados */\n"
+"    text-transform: uppercase;                   /* Texto en may\303\272sculas */"));
 
         verticalLayout_dif->addWidget(btnVolverDificultad);
 
@@ -279,12 +304,22 @@ public:
         btnGuardarFin = new QPushButton(pageFin);
         btnGuardarFin->setObjectName("btnGuardarFin");
         btnGuardarFin->setMinimumSize(QSize(0, 45));
+        btnGuardarFin->setStyleSheet(QString::fromUtf8("    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */\n"
+"    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */\n"
+"    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */\n"
+"    border-radius: 10px;                        /* Bordes redondeados */\n"
+"    text-transform: uppercase;                   /* Texto en may\303\272sculas */"));
 
         verticalLayout_4->addWidget(btnGuardarFin);
 
         btnVolverMenu = new QPushButton(pageFin);
         btnVolverMenu->setObjectName("btnVolverMenu");
         btnVolverMenu->setMinimumSize(QSize(0, 45));
+        btnVolverMenu->setStyleSheet(QString::fromUtf8("    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */\n"
+"    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */\n"
+"    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */\n"
+"    border-radius: 10px;                        /* Bordes redondeados */\n"
+"    text-transform: uppercase;                   /* Texto en may\303\272sculas */"));
 
         verticalLayout_4->addWidget(btnVolverMenu);
 
@@ -300,7 +335,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -309,8 +344,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "POO - Batalla de Elementos", nullptr));
-        lblTitulo->setStyleSheet(QCoreApplication::translate("MainWindow", "color: #2c3e50;", nullptr));
-        lblTitulo->setText(QCoreApplication::translate("MainWindow", "\302\241Agua, Tierra y Fuego!", nullptr));
+        lblTitulo->setText(QCoreApplication::translate("MainWindow", "\302\241<span style=\"color: #2980b9;\">Agua</span>, <span style=\"color: #27ae60;\">Tierra</span> y <span style=\"color: #c0392b;\">Fuego</span>!", nullptr));
         btnIniciarJuego->setText(QCoreApplication::translate("MainWindow", "Iniciar Nueva Partida", nullptr));
         btnCargarJuegoInicio->setText(QCoreApplication::translate("MainWindow", "Cargar Partida Existente", nullptr));
         btnSalir->setText(QCoreApplication::translate("MainWindow", "Salir", nullptr));

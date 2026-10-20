@@ -18,9 +18,14 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="pageInicio">
+       <property name="styleSheet">
+        <string notr="true">#pageInicio {
+    border-image: url(:/imagenes/cc70f896-a6ee-4185-a978-6fd627721f1e.png) 0 0 0 0 stretch stretch;
+}</string>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <spacer name="verticalSpacer">
@@ -39,15 +44,15 @@
          <widget class="QLabel" name="lblTitulo">
           <property name="font">
            <font>
-            <pointsize>24</pointsize>
+            <pointsize>36</pointsize>
             <bold>true</bold>
            </font>
           </property>
           <property name="styleSheet">
-           <string>color: #2c3e50;</string>
+           <string notr="true">¡&lt;span style=&quot;color: #2980b9;&quot;&gt;Agua&lt;/span&gt;, &lt;span style=&quot;color: #27ae60;&quot;&gt;Tierra&lt;/span&gt; y &lt;span style=&quot;color: #c0392b;&quot;&gt;Fuego&lt;/span&gt;!</string>
           </property>
           <property name="text">
-           <string>¡Agua, Tierra y Fuego!</string>
+           <string>¡&lt;span style=&quot;color: #2980b9;&quot;&gt;Agua&lt;/span&gt;, &lt;span style=&quot;color: #27ae60;&quot;&gt;Tierra&lt;/span&gt; y &lt;span style=&quot;color: #c0392b;&quot;&gt;Fuego&lt;/span&gt;!</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -71,7 +76,7 @@
          <widget class="QPushButton" name="btnIniciarJuego">
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>50</width>
             <height>50</height>
            </size>
           </property>
@@ -80,6 +85,13 @@
             <pointsize>12</pointsize>
             <bold>true</bold>
            </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */
+    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */
+    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */
+    border-radius: 10px;                        /* Bordes redondeados */
+    text-transform: uppercase;                   /* Texto en mayúsculas */</string>
           </property>
           <property name="text">
            <string>Iniciar Nueva Partida</string>
@@ -90,7 +102,7 @@
          <widget class="QPushButton" name="btnCargarJuegoInicio">
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>50</width>
             <height>50</height>
            </size>
           </property>
@@ -100,6 +112,13 @@
             <bold>true</bold>
            </font>
           </property>
+          <property name="styleSheet">
+           <string notr="true">    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */
+    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */
+    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */
+    border-radius: 10px;                        /* Bordes redondeados */
+    text-transform: uppercase;                   /* Texto en mayúsculas */</string>
+          </property>
           <property name="text">
            <string>Cargar Partida Existente</string>
           </property>
@@ -107,8 +126,24 @@
         </item>
         <item>
          <widget class="QPushButton" name="btnSalir">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
           <property name="styleSheet">
-           <string notr="true">background-color: #c0392b; color: white;</string>
+           <string notr="true">    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */
+    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */
+    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */
+    border-radius: 10px;                        /* Bordes redondeados */
+    text-transform: uppercase;                   /* Texto en mayúsculas */</string>
           </property>
           <property name="text">
            <string>Salir</string>
@@ -276,6 +311,13 @@
             <width>0</width>
             <height>40</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */
+    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */
+    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */
+    border-radius: 10px;                        /* Bordes redondeados */
+    text-transform: uppercase;                   /* Texto en mayúsculas */</string>
           </property>
           <property name="text">
            <string>Volver al Menú</string>
@@ -446,6 +488,13 @@
             <height>45</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */
+    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */
+    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */
+    border-radius: 10px;                        /* Bordes redondeados */
+    text-transform: uppercase;                   /* Texto en mayúsculas */</string>
+          </property>
           <property name="text">
            <string>Guardar Partida</string>
           </property>
@@ -458,6 +507,13 @@
             <width>0</width>
             <height>45</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */
+    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */
+    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */
+    border-radius: 10px;                        /* Bordes redondeados */
+    text-transform: uppercase;                   /* Texto en mayúsculas */</string>
           </property>
           <property name="text">
            <string>Volver al Menú Principal</string>
