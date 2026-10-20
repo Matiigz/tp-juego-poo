@@ -32,8 +32,6 @@ private slots:
     void onGuardarFinClicked();
     void onVolverMenuClicked();
 
-    void on_pushButton_clicked();
-
 private:
     Ui::MainWindow *ui;
     Partida partida;
