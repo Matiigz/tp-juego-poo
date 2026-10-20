@@ -36,6 +36,7 @@ public:
     QSpacerItem *verticalSpacer_2;
     QPushButton *btnIniciarJuego;
     QPushButton *btnCargarJuegoInicio;
+<<<<<<< Updated upstream
     QPushButton *btnSalir;
     QSpacerItem *verticalSpacer_3;
     QWidget *pageDificultad;
@@ -49,6 +50,9 @@ public:
     QSpacerItem *verticalSpacer_dif3;
     QPushButton *btnContinuarJuego;
     QPushButton *btnVolverDificultad;
+=======
+    QSpacerItem *verticalSpacer_3;
+>>>>>>> Stashed changes
     QWidget *pageJuego;
     QVBoxLayout *verticalLayout_3;
     QLabel *lblEstadoJuego;
@@ -82,9 +86,12 @@ public:
         stackedWidget->setObjectName("stackedWidget");
         pageInicio = new QWidget();
         pageInicio->setObjectName("pageInicio");
+<<<<<<< Updated upstream
         pageInicio->setStyleSheet(QString::fromUtf8("#pageInicio {\n"
 "    border-image: url(:/imagenes/cc70f896-a6ee-4185-a978-6fd627721f1e.png) 0 0 0 0 stretch stretch;\n"
 "}"));
+=======
+>>>>>>> Stashed changes
         verticalLayout_2 = new QVBoxLayout(pageInicio);
         verticalLayout_2->setObjectName("verticalLayout_2");
         verticalSpacer = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
@@ -94,10 +101,16 @@ public:
         lblTitulo = new QLabel(pageInicio);
         lblTitulo->setObjectName("lblTitulo");
         QFont font;
+<<<<<<< Updated upstream
         font.setPointSize(36);
         font.setBold(true);
         lblTitulo->setFont(font);
         lblTitulo->setStyleSheet(QString::fromUtf8("\302\241<span style=\"color: #2980b9;\">Agua</span>, <span style=\"color: #27ae60;\">Tierra</span> y <span style=\"color: #c0392b;\">Fuego</span>!"));
+=======
+        font.setPointSize(24);
+        font.setBold(true);
+        lblTitulo->setFont(font);
+>>>>>>> Stashed changes
         lblTitulo->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_2->addWidget(lblTitulo);
@@ -108,21 +121,29 @@ public:
 
         btnIniciarJuego = new QPushButton(pageInicio);
         btnIniciarJuego->setObjectName("btnIniciarJuego");
+<<<<<<< Updated upstream
         btnIniciarJuego->setMinimumSize(QSize(50, 50));
+=======
+        btnIniciarJuego->setMinimumSize(QSize(0, 50));
+>>>>>>> Stashed changes
         QFont font1;
         font1.setPointSize(12);
         font1.setBold(true);
         btnIniciarJuego->setFont(font1);
+<<<<<<< Updated upstream
         btnIniciarJuego->setStyleSheet(QString::fromUtf8("    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */\n"
 "    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */\n"
 "    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */\n"
 "    border-radius: 10px;                        /* Bordes redondeados */\n"
 "    text-transform: uppercase;                   /* Texto en may\303\272sculas */"));
+=======
+>>>>>>> Stashed changes
 
         verticalLayout_2->addWidget(btnIniciarJuego);
 
         btnCargarJuegoInicio = new QPushButton(pageInicio);
         btnCargarJuegoInicio->setObjectName("btnCargarJuegoInicio");
+<<<<<<< Updated upstream
         btnCargarJuegoInicio->setMinimumSize(QSize(50, 50));
         btnCargarJuegoInicio->setFont(font1);
         btnCargarJuegoInicio->setStyleSheet(QString::fromUtf8("    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */\n"
@@ -145,11 +166,19 @@ public:
 
         verticalLayout_2->addWidget(btnSalir);
 
+=======
+        btnCargarJuegoInicio->setMinimumSize(QSize(0, 50));
+        btnCargarJuegoInicio->setFont(font1);
+
+        verticalLayout_2->addWidget(btnCargarJuegoInicio);
+
+>>>>>>> Stashed changes
         verticalSpacer_3 = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_2->addItem(verticalSpacer_3);
 
         stackedWidget->addWidget(pageInicio);
+<<<<<<< Updated upstream
         pageDificultad = new QWidget();
         pageDificultad->setObjectName("pageDificultad");
         verticalLayout_dif = new QVBoxLayout(pageDificultad);
@@ -220,22 +249,37 @@ public:
         verticalLayout_dif->addWidget(btnVolverDificultad);
 
         stackedWidget->addWidget(pageDificultad);
+=======
+>>>>>>> Stashed changes
         pageJuego = new QWidget();
         pageJuego->setObjectName("pageJuego");
         verticalLayout_3 = new QVBoxLayout(pageJuego);
         verticalLayout_3->setObjectName("verticalLayout_3");
         lblEstadoJuego = new QLabel(pageJuego);
         lblEstadoJuego->setObjectName("lblEstadoJuego");
+<<<<<<< Updated upstream
         lblEstadoJuego->setFont(font3);
+=======
+        QFont font2;
+        font2.setPointSize(14);
+        font2.setBold(true);
+        lblEstadoJuego->setFont(font2);
+>>>>>>> Stashed changes
         lblEstadoJuego->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_3->addWidget(lblEstadoJuego);
 
         lblIA = new QLabel(pageJuego);
         lblIA->setObjectName("lblIA");
+<<<<<<< Updated upstream
         QFont font4;
         font4.setBold(true);
         lblIA->setFont(font4);
+=======
+        QFont font3;
+        font3.setBold(true);
+        lblIA->setFont(font3);
+>>>>>>> Stashed changes
 
         verticalLayout_3->addWidget(lblIA);
 
@@ -253,7 +297,11 @@ public:
 
         lblHumano = new QLabel(pageJuego);
         lblHumano->setObjectName("lblHumano");
+<<<<<<< Updated upstream
         lblHumano->setFont(font4);
+=======
+        lblHumano->setFont(font3);
+>>>>>>> Stashed changes
 
         verticalLayout_3->addWidget(lblHumano);
 
@@ -274,7 +322,11 @@ public:
         btnOpciones = new QPushButton(pageJuego);
         btnOpciones->setObjectName("btnOpciones");
         btnOpciones->setMinimumSize(QSize(0, 40));
+<<<<<<< Updated upstream
         btnOpciones->setFont(font4);
+=======
+        btnOpciones->setFont(font3);
+>>>>>>> Stashed changes
 
         horizontalLayout->addWidget(btnOpciones);
 
@@ -292,7 +344,14 @@ public:
 
         lblResultadoFin = new QLabel(pageFin);
         lblResultadoFin->setObjectName("lblResultadoFin");
+<<<<<<< Updated upstream
         lblResultadoFin->setFont(font2);
+=======
+        QFont font4;
+        font4.setPointSize(20);
+        font4.setBold(true);
+        lblResultadoFin->setFont(font4);
+>>>>>>> Stashed changes
         lblResultadoFin->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_4->addWidget(lblResultadoFin);
@@ -304,22 +363,28 @@ public:
         btnGuardarFin = new QPushButton(pageFin);
         btnGuardarFin->setObjectName("btnGuardarFin");
         btnGuardarFin->setMinimumSize(QSize(0, 45));
+<<<<<<< Updated upstream
         btnGuardarFin->setStyleSheet(QString::fromUtf8("    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */\n"
 "    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */\n"
 "    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */\n"
 "    border-radius: 10px;                        /* Bordes redondeados */\n"
 "    text-transform: uppercase;                   /* Texto en may\303\272sculas */"));
+=======
+>>>>>>> Stashed changes
 
         verticalLayout_4->addWidget(btnGuardarFin);
 
         btnVolverMenu = new QPushButton(pageFin);
         btnVolverMenu->setObjectName("btnVolverMenu");
         btnVolverMenu->setMinimumSize(QSize(0, 45));
+<<<<<<< Updated upstream
         btnVolverMenu->setStyleSheet(QString::fromUtf8("    color: rgba(255, 255, 255, 1);              /* Color de la letra: blanco */\n"
 "    background-color: rgba(255, 0, 0, 1);       /* Fondo rojo */\n"
 "    border: 2px solid rgba(0, 0, 0, 1);          /* Borde negro */\n"
 "    border-radius: 10px;                        /* Bordes redondeados */\n"
 "    text-transform: uppercase;                   /* Texto en may\303\272sculas */"));
+=======
+>>>>>>> Stashed changes
 
         verticalLayout_4->addWidget(btnVolverMenu);
 
@@ -335,7 +400,11 @@ public:
 
         retranslateUi(MainWindow);
 
+<<<<<<< Updated upstream
         stackedWidget->setCurrentIndex(2);
+=======
+        stackedWidget->setCurrentIndex(1);
+>>>>>>> Stashed changes
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -344,6 +413,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "POO - Batalla de Elementos", nullptr));
+<<<<<<< Updated upstream
         lblTitulo->setText(QCoreApplication::translate("MainWindow", "\302\241<span style=\"color: #2980b9;\">Agua</span>, <span style=\"color: #27ae60;\">Tierra</span> y <span style=\"color: #c0392b;\">Fuego</span>!", nullptr));
         btnIniciarJuego->setText(QCoreApplication::translate("MainWindow", "Iniciar Nueva Partida", nullptr));
         btnCargarJuegoInicio->setText(QCoreApplication::translate("MainWindow", "Cargar Partida Existente", nullptr));
@@ -355,6 +425,12 @@ public:
         btnContinuarJuego->setStyleSheet(QCoreApplication::translate("MainWindow", "background-color: #27ae60; color: white;", nullptr));
         btnContinuarJuego->setText(QCoreApplication::translate("MainWindow", "COMENZAR BATALLA", nullptr));
         btnVolverDificultad->setText(QCoreApplication::translate("MainWindow", "Volver al Men\303\272", nullptr));
+=======
+        lblTitulo->setStyleSheet(QCoreApplication::translate("MainWindow", "color: #2c3e50;", nullptr));
+        lblTitulo->setText(QCoreApplication::translate("MainWindow", "\302\241Agua, Tierra y Fuego!", nullptr));
+        btnIniciarJuego->setText(QCoreApplication::translate("MainWindow", "Iniciar Nueva Partida", nullptr));
+        btnCargarJuegoInicio->setText(QCoreApplication::translate("MainWindow", "Cargar Partida Existente", nullptr));
+>>>>>>> Stashed changes
         lblEstadoJuego->setText(QCoreApplication::translate("MainWindow", "Ronda 1", nullptr));
         lblIA->setText(QCoreApplication::translate("MainWindow", "Cartas de la IA Enemiga:", nullptr));
         lblHumano->setText(QCoreApplication::translate("MainWindow", "Tus Cartas (Selecciona una para atacar):", nullptr));
