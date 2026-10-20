@@ -16,8 +16,17 @@ MainWindow::MainWindow(QWidget *parent)
     GestorConfiguracion::cargarConfiguracion("config.json", partida);
     ui->stackedWidget->setCurrentWidget(ui->pageInicio);
 
+    // Conexiones de botones
     connect(ui->btnIniciarJuego, &QPushButton::clicked, this, &MainWindow::onIniciarJuegoClicked);
     connect(ui->btnCargarJuegoInicio, &QPushButton::clicked, this, &MainWindow::onCargarJuegoInicioClicked);
+    
+    // Conexiones de dificultad
+    connect(ui->btnDificultadAleatoria, &QPushButton::clicked, this, &MainWindow::onDificultadAleatoriaClicked);
+    connect(ui->btnDificultadEstrategica, &QPushButton::clicked, this, &MainWindow::onDificultadEstrategicaClicked);
+    connect(ui->btnDificultadSuperIA, &QPushButton::clicked, this, &MainWindow::onDificultadSuperIAClicked);
+    connect(ui->btnContinuarJuego, &QPushButton::clicked, this, &MainWindow::onContinuarJuegoClicked);
+    connect(ui->btnVolverDificultad, &QPushButton::clicked, this, &MainWindow::onVolverDificultadClicked);
+
     connect(ui->btnAtacar, &QPushButton::clicked, this, &MainWindow::onAtacarClicked);
     connect(ui->btnOpciones, &QPushButton::clicked, this, &MainWindow::onOpcionesClicked);
     connect(ui->btnGuardarFin, &QPushButton::clicked, this, &MainWindow::onGuardarFinClicked);
@@ -53,7 +62,6 @@ void MainWindow::actualizarInterfaz() {
         else if (elem->getTipo() == TipoElemento::TIERRA) { archivoImg = "tierra.png"; colorFondo = "#e8f5e9"; colorBorde = "#4caf50"; }
         else if (elem->getTipo() == TipoElemento::FUEGO) { archivoImg = "fuego.png"; colorFondo = "#ffebee"; colorBorde = "#f44336"; }
 
-        // --- RUTA DE TUS IMÁGENES --- 
         QString rutaBase = "C:/Users/matia/OneDrive/Escritorio/juegopoo/imagenes/";
 
         if (!elem->estaVivo()) {
@@ -115,14 +123,62 @@ void MainWindow::actualizarInterfaz() {
     }
 }
 
+// --- LÓGICA DE DIFICULTAD ---
+
 void MainWindow::onIniciarJuegoClicked() {
+    // Reseteamos la vista por si vuelven a jugar
+    ui->btnDificultadAleatoria->setStyleSheet("");
+    ui->btnDificultadEstrategica->setStyleSheet("");
+    ui->btnDificultadSuperIA->setStyleSheet("");
+    ui->btnContinuarJuego->setEnabled(false); // Deshabilitar el botón verde hasta que elijan algo
+
+    ui->stackedWidget->setCurrentWidget(ui->pageDificultad);
+}
+
+void MainWindow::resaltarBotonDificultad(QPushButton* botonActivo) {
+    ui->btnDificultadAleatoria->setStyleSheet("");
+    ui->btnDificultadEstrategica->setStyleSheet("");
+    ui->btnDificultadSuperIA->setStyleSheet("");
+
+    // Pintar de azul el botón seleccionado
+    botonActivo->setStyleSheet("background-color: #3498db; color: white; border: 2px solid #2980b9;");
+    
+    // Habilitar el botón de continuar
+    ui->btnContinuarJuego->setEnabled(true);
+}
+
+void MainWindow::onDificultadAleatoriaClicked() { 
+    dificultadSeleccionada = TipoIA::ALEATORIA; 
+    resaltarBotonDificultad(ui->btnDificultadAleatoria);
+}
+void MainWindow::onDificultadEstrategicaClicked() { 
+    dificultadSeleccionada = TipoIA::ESTRATEGICA; 
+    resaltarBotonDificultad(ui->btnDificultadEstrategica);
+}
+void MainWindow::onDificultadSuperIAClicked() { 
+    dificultadSeleccionada = TipoIA::SUPER_IA; 
+    resaltarBotonDificultad(ui->btnDificultadSuperIA);
+}
+
+void MainWindow::onContinuarJuegoClicked() {
+    iniciarPartidaConDificultad(dificultadSeleccionada);
+}
+
+void MainWindow::onVolverDificultadClicked() {
+    ui->stackedWidget->setCurrentWidget(ui->pageInicio);
+}
+
+void MainWindow::iniciarPartidaConDificultad(TipoIA tipo) {
+    partida.setTipoIA(tipo);
     partida.inicializarNuevaPartida();
     cartaSeleccionadaIndex = -1;
     ui->logBatalla->clear();
-    ui->logBatalla->append("¡Que comience la batalla elemental!");
+    ui->logBatalla->append(QString("¡Batalla iniciada! Dificultad IA: %1").arg(tipo == TipoIA::ALEATORIA ? "Fácil" : (tipo == TipoIA::ESTRATEGICA ? "Normal" : "Difícil")));
     actualizarInterfaz();
     ui->stackedWidget->setCurrentWidget(ui->pageJuego);
 }
+
+// ----------------------------
 
 void MainWindow::onCargarJuegoInicioClicked() {
     QString file = QFileDialog::getOpenFileName(this, "Cargar Partida", "", "Archivos Binarios (*.dat)");

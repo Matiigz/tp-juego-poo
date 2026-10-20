@@ -2,9 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
 #include "../model/Partida.h"
 
-// Esto le avisa a C++ que existe una interfaz creada en el .ui
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -19,18 +19,29 @@ public:
 private slots:
     void onIniciarJuegoClicked();
     void onCargarJuegoInicioClicked();
+    
+    // --- Slots para la Dificultad ---
+    void onDificultadAleatoriaClicked();
+    void onDificultadEstrategicaClicked();
+    void onDificultadSuperIAClicked();
+    void onContinuarJuegoClicked(); // NUEVO BOTON
+    void onVolverDificultadClicked();
+
     void onAtacarClicked();
     void onOpcionesClicked();
     void onGuardarFinClicked();
     void onVolverMenuClicked();
 
 private:
-    Ui::MainWindow *ui; // Puntero mágico que controla tu diseño
+    Ui::MainWindow *ui;
     Partida partida;
     int cartaSeleccionadaIndex = -1;
+    TipoIA dificultadSeleccionada; // Guarda lo que elijamos
 
     void actualizarInterfaz();
     void limpiarLayout(QLayout* layout);
+    void iniciarPartidaConDificultad(TipoIA tipo);
+    void resaltarBotonDificultad(QPushButton* botonActivo); // Pinta el botón elegido
 };
 
 #endif // MAINWINDOW_H
