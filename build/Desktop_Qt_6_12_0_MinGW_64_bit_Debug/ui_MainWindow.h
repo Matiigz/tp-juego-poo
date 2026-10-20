@@ -36,6 +36,7 @@ public:
     QSpacerItem *verticalSpacer_2;
     QPushButton *btnIniciarJuego;
     QPushButton *btnCargarJuegoInicio;
+    QPushButton *btnSalir;
     QSpacerItem *verticalSpacer_3;
     QWidget *pageDificultad;
     QVBoxLayout *verticalLayout_dif;
@@ -93,7 +94,7 @@ public:
         font.setPointSize(24);
         font.setBold(true);
         lblTitulo->setFont(font);
-        lblTitulo->setAlignment(Qt::AlignCenter);
+        lblTitulo->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_2->addWidget(lblTitulo);
 
@@ -118,6 +119,12 @@ public:
 
         verticalLayout_2->addWidget(btnCargarJuegoInicio);
 
+        btnSalir = new QPushButton(pageInicio);
+        btnSalir->setObjectName("btnSalir");
+        btnSalir->setStyleSheet(QString::fromUtf8("background-color: #c0392b; color: white;"));
+
+        verticalLayout_2->addWidget(btnSalir);
+
         verticalSpacer_3 = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_2->addItem(verticalSpacer_3);
@@ -137,7 +144,7 @@ public:
         font2.setPointSize(20);
         font2.setBold(true);
         lblTituloDificultad->setFont(font2);
-        lblTituloDificultad->setAlignment(Qt::AlignCenter);
+        lblTituloDificultad->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_dif->addWidget(lblTituloDificultad);
 
@@ -172,12 +179,12 @@ public:
 
         btnContinuarJuego = new QPushButton(pageDificultad);
         btnContinuarJuego->setObjectName("btnContinuarJuego");
+        btnContinuarJuego->setEnabled(false);
         btnContinuarJuego->setMinimumSize(QSize(0, 55));
         QFont font3;
         font3.setPointSize(14);
         font3.setBold(true);
         btnContinuarJuego->setFont(font3);
-        btnContinuarJuego->setEnabled(false);
 
         verticalLayout_dif->addWidget(btnContinuarJuego);
 
@@ -195,7 +202,7 @@ public:
         lblEstadoJuego = new QLabel(pageJuego);
         lblEstadoJuego->setObjectName("lblEstadoJuego");
         lblEstadoJuego->setFont(font3);
-        lblEstadoJuego->setAlignment(Qt::AlignCenter);
+        lblEstadoJuego->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_3->addWidget(lblEstadoJuego);
 
@@ -261,7 +268,7 @@ public:
         lblResultadoFin = new QLabel(pageFin);
         lblResultadoFin->setObjectName("lblResultadoFin");
         lblResultadoFin->setFont(font2);
-        lblResultadoFin->setAlignment(Qt::AlignCenter);
+        lblResultadoFin->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_4->addWidget(lblResultadoFin);
 
@@ -306,6 +313,7 @@ public:
         lblTitulo->setText(QCoreApplication::translate("MainWindow", "\302\241Agua, Tierra y Fuego!", nullptr));
         btnIniciarJuego->setText(QCoreApplication::translate("MainWindow", "Iniciar Nueva Partida", nullptr));
         btnCargarJuegoInicio->setText(QCoreApplication::translate("MainWindow", "Cargar Partida Existente", nullptr));
+        btnSalir->setText(QCoreApplication::translate("MainWindow", "Salir", nullptr));
         lblTituloDificultad->setText(QCoreApplication::translate("MainWindow", "Selecciona la Dificultad de la IA", nullptr));
         btnDificultadAleatoria->setText(QCoreApplication::translate("MainWindow", "F\303\241cil (IA Aleatoria)", nullptr));
         btnDificultadEstrategica->setText(QCoreApplication::translate("MainWindow", "Normal (IA Estrat\303\251gica)", nullptr));
