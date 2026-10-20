@@ -25,3 +25,6 @@ HEADERS += \
     persistence/GestorPersistencia.h \
     ui/MainWindow.h
  FORMS += ui/MainWindow.ui
+
+RESOURCES += \
+    recursos.qrc
