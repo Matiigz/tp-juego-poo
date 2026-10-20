@@ -62,7 +62,7 @@ void MainWindow::actualizarInterfaz() {
         else if (elem->getTipo() == TipoElemento::TIERRA) { archivoImg = "tierra.png"; colorFondo = "#e8f5e9"; colorBorde = "#4caf50"; }
         else if (elem->getTipo() == TipoElemento::FUEGO) { archivoImg = "fuego.png"; colorFondo = "#ffebee"; colorBorde = "#f44336"; }
 
-        QString rutaBase = "C:/Users/matia/OneDrive/Escritorio/juegopoo/imagenes/";
+        QString rutaBase = ":/imagenes/";
 
         if (!elem->estaVivo()) {
             colorFondo = "#eeeeee"; 
