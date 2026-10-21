@@ -29,31 +29,43 @@ void Partida::inicializarNuevaPartida() {
 }
 
 QString Partida::ejecutarRonda(int indiceElementoHumano) {
-    if (estaTerminada()) return "La partida ha finalizado.";
+    if (estaTerminada()) return "<span style='color: gray;'>La partida ha finalizado.</span>";
 
     auto elemHumano = humano.getElementos()[indiceElementoHumano];
     if (!elemHumano->estaVivo()) {
-        return "El elemento seleccionado ya no tiene energía activa.";
+        return "<span style='color: #e67e22;'>⚠️ El elemento seleccionado ya no tiene energía activa. Elige otro.</span>";
     }
 
     auto elemIA = EstrategiaIA::elegirElemento(tipoIA, ia, elemHumano, gestorDanio);
-    if (!elemIA) return "La IA no tiene elementos disponibles.";
+    if (!elemIA) return "<span style='color: gray;'>La IA no tiene elementos disponibles.</span>";
 
+    // Calcular los daños
     double danioA_IA = gestorDanio.calcularDanio(elemHumano->getTipo(), elemIA->getTipo());
     double danioAHumano = gestorDanio.calcularDanio(elemIA->getTipo(), elemHumano->getTipo());
 
+    // Aplicar daños
     elemIA->reducirEnergia(danioA_IA);
     elemHumano->reducirEnergia(danioAHumano);
 
-    QString resultado = QString("Ronda %1:\n- Tu %2 causó %3 de daño al %4 enemigo.\n- El %4 enemigo causó %5 de daño a tu %2.\n")
-                        .arg(rondaActual)
-                        .arg(elemHumano->getNombreTipo())
-                        .arg(danioA_IA)
-                        .arg(elemIA->getNombreTipo())
-                        .arg(danioAHumano);
+    // Texto enriquecido (HTML) para darle color y emojis al log
+    QString resultado = QString("<b>⚔️ Ronda %1:</b><br>"
+                                "<span style='color: #27ae60;'>🟢 Tu %2 atacó causando <b>%3</b> de daño.</span><br>"
+                                "<span style='color: #c0392b;'>🔴 El %4 de la IA respondió con <b>%5</b> de daño.</span><br>")
+                            .arg(rondaActual)
+                            .arg(elemHumano->getNombreTipo())
+                            .arg(danioA_IA)
+                            .arg(elemIA->getNombreTipo())
+                            .arg(danioAHumano);
 
-    if (!elemHumano->estaVivo()) resultado += "-> Tu elemento ha sido eliminado.\n";
-    if (!elemIA->estaVivo()) resultado += "-> El elemento de la IA ha sido eliminado.\n";
+    // Avisos de eliminación
+    if (!elemHumano->estaVivo()) {
+        resultado += "<i><span style='color: #7f8c8d;'>☠️ Tu elemento ha sido eliminado.</span></i><br>";
+    }
+    if (!elemIA->estaVivo()) {
+        resultado += "<i><span style='color: #7f8c8d;'>☠️ El elemento de la IA ha sido eliminado.</span></i><br>";
+    }
+
+    resultado += "<br>"; // Un pequeño salto de línea extra para separar visualmente las rondas
 
     rondaActual++;
     return resultado;

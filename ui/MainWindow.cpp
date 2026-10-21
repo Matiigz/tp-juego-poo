@@ -1,5 +1,5 @@
 #include "MainWindow.h"
-#include "ui_MainWindow.h" 
+#include "ui_MainWindow.h"
 #include "../persistence/GestorConfiguracion.h"
 #include "../persistence/GestorPersistencia.h"
 #include <QFileDialog>
@@ -7,26 +7,28 @@
 #include <QToolButton>
 #include <QIcon>
 #include <QSize>
-
+#include <QTextCursor>
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), partida("Jugador 1") 
+    : QMainWindow(parent), ui(new Ui::MainWindow), partida("Jugador 1")
 {
-    ui->setupUi(this); 
-    
+    ui->setupUi(this);
+
     GestorConfiguracion::cargarConfiguracion("config.json", partida);
     ui->stackedWidget->setCurrentWidget(ui->pageInicio);
 
     // Conexiones de botones
     connect(ui->btnIniciarJuego, &QPushButton::clicked, this, &MainWindow::onIniciarJuegoClicked);
     connect(ui->btnCargarJuegoInicio, &QPushButton::clicked, this, &MainWindow::onCargarJuegoInicioClicked);
-    
+    connect(ui->btnSalir, &QPushButton::clicked, this, &MainWindow::close);
+
     // Conexiones de dificultad
     connect(ui->btnDificultadAleatoria, &QPushButton::clicked, this, &MainWindow::onDificultadAleatoriaClicked);
     connect(ui->btnDificultadEstrategica, &QPushButton::clicked, this, &MainWindow::onDificultadEstrategicaClicked);
     connect(ui->btnDificultadSuperIA, &QPushButton::clicked, this, &MainWindow::onDificultadSuperIAClicked);
     connect(ui->btnContinuarJuego, &QPushButton::clicked, this, &MainWindow::onContinuarJuegoClicked);
     connect(ui->btnVolverDificultad, &QPushButton::clicked, this, &MainWindow::onVolverDificultadClicked);
-    connect(ui->btnSalir, &QPushButton::clicked, this, &MainWindow::close);
+
+    // Conexiones del juego
     connect(ui->btnAtacar, &QPushButton::clicked, this, &MainWindow::onAtacarClicked);
     connect(ui->btnOpciones, &QPushButton::clicked, this, &MainWindow::onOpcionesClicked);
     connect(ui->btnGuardarFin, &QPushButton::clicked, this, &MainWindow::onGuardarFinClicked);
@@ -65,25 +67,25 @@ void MainWindow::actualizarInterfaz() {
         QString rutaBase = ":/imagenes/";
 
         if (!elem->estaVivo()) {
-            colorFondo = "#eeeeee"; 
-            colorBorde = "#9e9e9e"; 
+            colorFondo = "#eeeeee";
+            colorBorde = "#9e9e9e";
         } else {
             btnCarta->setIcon(QIcon(rutaBase + archivoImg));
             btnCarta->setIconSize(QSize(70, 70));
         }
 
         QString estiloBorde = seleccionada ? "border: 4px solid #f1c40f;" : QString("border: 2px solid %1;").arg(colorBorde);
-        
+
         btnCarta->setStyleSheet(QString(
-            "QToolButton { background-color: %1; %2 border-radius: 10px; font-size: 14px; font-weight: bold; }"
-            "QToolButton:hover { background-color: #ffffff; }"
-        ).arg(colorFondo, estiloBorde));
+                                    "QToolButton { background-color: %1; %2 border-radius: 10px; font-size: 14px; font-weight: bold; }"
+                                    "QToolButton:hover { background-color: #ffffff; }"
+                                    ).arg(colorFondo, estiloBorde));
 
         QString txt = QString("\n%1\nHP: %2").arg(elem->getNombreTipo(), QString::number(elem->getEnergia()));
         if (!elem->estaVivo()) txt = "\n💀 ELIMINADO\nHP: 0";
-        
+
         btnCarta->setText(txt);
-        
+
         if (!esHumano || !elem->estaVivo()) {
             btnCarta->setAttribute(Qt::WA_TransparentForMouseEvents);
             btnCarta->setFocusPolicy(Qt::NoFocus);
@@ -101,7 +103,7 @@ void MainWindow::actualizarInterfaz() {
     for (int i = 0; i < elementosHumano.size(); ++i) {
         bool estaSeleccionada = (i == cartaSeleccionadaIndex);
         auto btnCarta = renderizarCarta(elementosHumano[i].get(), true, estaSeleccionada);
-        
+
         if (elementosHumano[i]->estaVivo()) {
             connect(btnCarta, &QToolButton::clicked, this, [this, i]() {
                 cartaSeleccionadaIndex = i;
@@ -115,7 +117,7 @@ void MainWindow::actualizarInterfaz() {
         ui->lblEstadoJuego->setText("FIN DE LA PARTIDA");
         ui->btnAtacar->setEnabled(false);
         ui->lblResultadoFin->setText(QString("¡PARTIDA FINALIZADA!\nGanador: %1").arg(partida.getGanador()));
-        ui->btnGuardarFin->setEnabled(false); 
+        ui->btnGuardarFin->setEnabled(false);
         ui->stackedWidget->setCurrentWidget(ui->pageFin);
     } else {
         ui->lblEstadoJuego->setText(QString("Ronda actual: %1").arg(partida.getRonda()));
@@ -126,11 +128,10 @@ void MainWindow::actualizarInterfaz() {
 // --- LÓGICA DE DIFICULTAD ---
 
 void MainWindow::onIniciarJuegoClicked() {
-    // Reseteamos la vista por si vuelven a jugar
     ui->btnDificultadAleatoria->setStyleSheet("");
     ui->btnDificultadEstrategica->setStyleSheet("");
     ui->btnDificultadSuperIA->setStyleSheet("");
-    ui->btnContinuarJuego->setEnabled(false); // Deshabilitar el botón verde hasta que elijan algo
+    ui->btnContinuarJuego->setEnabled(false);
 
     ui->stackedWidget->setCurrentWidget(ui->pageDificultad);
 }
@@ -140,23 +141,20 @@ void MainWindow::resaltarBotonDificultad(QPushButton* botonActivo) {
     ui->btnDificultadEstrategica->setStyleSheet("");
     ui->btnDificultadSuperIA->setStyleSheet("");
 
-    // Pintar de azul el botón seleccionado
     botonActivo->setStyleSheet("background-color: #3498db; color: white; border: 2px solid #2980b9;");
-    
-    // Habilitar el botón de continuar
     ui->btnContinuarJuego->setEnabled(true);
 }
 
-void MainWindow::onDificultadAleatoriaClicked() { 
-    dificultadSeleccionada = TipoIA::ALEATORIA; 
+void MainWindow::onDificultadAleatoriaClicked() {
+    dificultadSeleccionada = TipoIA::ALEATORIA;
     resaltarBotonDificultad(ui->btnDificultadAleatoria);
 }
-void MainWindow::onDificultadEstrategicaClicked() { 
-    dificultadSeleccionada = TipoIA::ESTRATEGICA; 
+void MainWindow::onDificultadEstrategicaClicked() {
+    dificultadSeleccionada = TipoIA::ESTRATEGICA;
     resaltarBotonDificultad(ui->btnDificultadEstrategica);
 }
-void MainWindow::onDificultadSuperIAClicked() { 
-    dificultadSeleccionada = TipoIA::SUPER_IA; 
+void MainWindow::onDificultadSuperIAClicked() {
+    dificultadSeleccionada = TipoIA::SUPER_IA;
     resaltarBotonDificultad(ui->btnDificultadSuperIA);
 }
 
@@ -172,8 +170,17 @@ void MainWindow::iniciarPartidaConDificultad(TipoIA tipo) {
     partida.setTipoIA(tipo);
     partida.inicializarNuevaPartida();
     cartaSeleccionadaIndex = -1;
+
+    // Configurar el Label de la IA para la interfaz
+    QString nombreIA;
+    if (tipo == TipoIA::ALEATORIA) nombreIA = "Modo: IA Aleatoria (Fácil)";
+    else if (tipo == TipoIA::ESTRATEGICA) nombreIA = "Modo: IA Estratégica (Normal)";
+    else nombreIA = "Modo: Súper IA (Difícil)";
+    ui->lblTipoIA->setText(nombreIA);
+
     ui->logBatalla->clear();
-    ui->logBatalla->append(QString("¡Batalla iniciada! Dificultad IA: %1").arg(tipo == TipoIA::ALEATORIA ? "Fácil" : (tipo == TipoIA::ESTRATEGICA ? "Normal" : "Difícil")));
+    ui->logBatalla->append("<span style='color: #2980b9;'><b>¡Que comience la batalla elemental!</b></span><br>");
+
     actualizarInterfaz();
     ui->stackedWidget->setCurrentWidget(ui->pageJuego);
 }
@@ -185,8 +192,15 @@ void MainWindow::onCargarJuegoInicioClicked() {
     if (!file.isEmpty()) {
         if (GestorPersistencia::cargarPartida(file, partida)) {
             cartaSeleccionadaIndex = -1;
+
+            QString nombreIA;
+            if (partida.getTipoIA() == TipoIA::ALEATORIA) nombreIA = "Modo: IA Aleatoria (Fácil)";
+            else if (partida.getTipoIA() == TipoIA::ESTRATEGICA) nombreIA = "Modo: IA Estratégica (Normal)";
+            else nombreIA = "Modo: Súper IA (Difícil)";
+            ui->lblTipoIA->setText(nombreIA);
+
             ui->logBatalla->clear();
-            ui->logBatalla->append("--- Partida cargada correctamente ---");
+            ui->logBatalla->append("<span style='color: #27ae60;'><b>--- Partida cargada correctamente ---</b></span><br>");
             actualizarInterfaz();
             ui->stackedWidget->setCurrentWidget(ui->pageJuego);
         } else {
@@ -202,7 +216,13 @@ void MainWindow::onAtacarClicked() {
     }
 
     QString res = partida.ejecutarRonda(cartaSeleccionadaIndex);
-    ui->logBatalla->append(res);
+
+    // Mover el cursor al inicio del log para insertar el texto arriba de todo
+    QTextCursor cursor = ui->logBatalla->textCursor();
+    cursor.movePosition(QTextCursor::Start);
+    ui->logBatalla->setTextCursor(cursor);
+    ui->logBatalla->insertHtml(res); // Inserta el nuevo combate en la parte superior
+
     cartaSeleccionadaIndex = -1;
     actualizarInterfaz();
 }
@@ -232,8 +252,3 @@ void MainWindow::onGuardarFinClicked() {
 void MainWindow::onVolverMenuClicked() {
     ui->stackedWidget->setCurrentWidget(ui->pageInicio);
 }
-void MainWindow::on_btnSalir_clicked()
-{
-
-}
-

@@ -19,12 +19,12 @@ public:
 private slots:
     void onIniciarJuegoClicked();
     void onCargarJuegoInicioClicked();
-    
+
     // --- Slots para la Dificultad ---
     void onDificultadAleatoriaClicked();
     void onDificultadEstrategicaClicked();
     void onDificultadSuperIAClicked();
-    void onContinuarJuegoClicked(); // NUEVO BOTON
+    void onContinuarJuegoClicked();
     void onVolverDificultadClicked();
 
     void onAtacarClicked();
@@ -32,18 +32,16 @@ private slots:
     void onGuardarFinClicked();
     void onVolverMenuClicked();
 
-    void on_btnSalir_clicked();
-
 private:
     Ui::MainWindow *ui;
     Partida partida;
     int cartaSeleccionadaIndex = -1;
-    TipoIA dificultadSeleccionada; // Guarda lo que elijamos
+    TipoIA dificultadSeleccionada;
 
     void actualizarInterfaz();
     void limpiarLayout(QLayout* layout);
     void iniciarPartidaConDificultad(TipoIA tipo);
-    void resaltarBotonDificultad(QPushButton* botonActivo); // Pinta el botón elegido
+    void resaltarBotonDificultad(QPushButton* botonActivo);
 };
 
 #endif // MAINWINDOW_H
