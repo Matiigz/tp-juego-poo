@@ -36,6 +36,7 @@ public:
     QSpacerItem *verticalSpacer_2;
     QPushButton *btnIniciarJuego;
     QPushButton *btnCargarJuegoInicio;
+    QPushButton *btnSalir;
     QSpacerItem *verticalSpacer_3;
     QWidget *pageDificultad;
     QVBoxLayout *verticalLayout_dif;
@@ -73,6 +74,49 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
         MainWindow->resize(850, 650);
+        MainWindow->setStyleSheet(QString::fromUtf8("/* Estilo base para todos los botones */\n"
+"QPushButton {\n"
+"    background-color: #2c3e50; /* Azul noche elegante */\n"
+"    color: #ffffff;\n"
+"    border: 2px solid #34495e;\n"
+"    border-radius: 15px; /* Bordes bien redondeados */\n"
+"    padding: 10px;\n"
+"    font-family: \"Segoe UI\", Arial, sans-serif;\n"
+"    font-size: 14px;\n"
+"    font-weight: bold;\n"
+"}\n"
+"\n"
+"/* Efecto al pasar el rat\303\263n por encima (Hover) */\n"
+"QPushButton:hover {\n"
+"    background-color: #34495e;\n"
+"    border: 2px solid #3498db; /* Borde celeste brillante */\n"
+"    color: #ecf0f1;\n"
+"}\n"
+"\n"
+"/* Efecto al hacer clic (Pressed) */\n"
+"QPushButton:pressed {\n"
+"    background-color: #2980b9;\n"
+"    border: 2px solid #2980b9;\n"
+"    padding-top: 12px; /* Simula que el bot\303\263n se hunde */\n"
+"    padding-bottom: 8px;\n"
+"}\n"
+"\n"
+"/* --- MAGIA ESPEC\303\215FICA PARA EL BOT\303\223N DE SALIR --- */\n"
+"QPushButton#btnSalir {\n"
+"    background-color: #c0392b; /* Rojo oscuro */\n"
+"    border: 2px solid #e7"
+                        "4c3c;\n"
+"}\n"
+"\n"
+"QPushButton#btnSalir:hover {\n"
+"    background-color: #e74c3c; /* Rojo brillante */\n"
+"    border: 2px solid #ff7979;\n"
+"}\n"
+"\n"
+"QPushButton#btnSalir:pressed {\n"
+"    background-color: #a5281b;\n"
+"    border: 2px solid #a5281b;\n"
+"}"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         verticalLayout = new QVBoxLayout(centralwidget);
@@ -81,6 +125,10 @@ public:
         stackedWidget->setObjectName("stackedWidget");
         pageInicio = new QWidget();
         pageInicio->setObjectName("pageInicio");
+        pageInicio->setStyleSheet(QString::fromUtf8("#pageInicio {\n"
+"   \n"
+"	border-image: url(:/imagenes/cc70f896-a6ee-4185-a978-6fd627721f1e.png) 0 0 0 0 stretch stretch;\n"
+"}"));
         verticalLayout_2 = new QVBoxLayout(pageInicio);
         verticalLayout_2->setObjectName("verticalLayout_2");
         verticalSpacer = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
@@ -93,7 +141,7 @@ public:
         font.setPointSize(24);
         font.setBold(true);
         lblTitulo->setFont(font);
-        lblTitulo->setAlignment(Qt::AlignCenter);
+        lblTitulo->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_2->addWidget(lblTitulo);
 
@@ -105,7 +153,7 @@ public:
         btnIniciarJuego->setObjectName("btnIniciarJuego");
         btnIniciarJuego->setMinimumSize(QSize(0, 50));
         QFont font1;
-        font1.setPointSize(12);
+        font1.setFamilies({QString::fromUtf8("Segoe UI")});
         font1.setBold(true);
         btnIniciarJuego->setFont(font1);
 
@@ -117,6 +165,13 @@ public:
         btnCargarJuegoInicio->setFont(font1);
 
         verticalLayout_2->addWidget(btnCargarJuegoInicio);
+
+        btnSalir = new QPushButton(pageInicio);
+        btnSalir->setObjectName("btnSalir");
+        btnSalir->setMinimumSize(QSize(50, 50));
+        btnSalir->setFont(font1);
+
+        verticalLayout_2->addWidget(btnSalir);
 
         verticalSpacer_3 = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
@@ -137,7 +192,7 @@ public:
         font2.setPointSize(20);
         font2.setBold(true);
         lblTituloDificultad->setFont(font2);
-        lblTituloDificultad->setAlignment(Qt::AlignCenter);
+        lblTituloDificultad->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_dif->addWidget(lblTituloDificultad);
 
@@ -172,12 +227,9 @@ public:
 
         btnContinuarJuego = new QPushButton(pageDificultad);
         btnContinuarJuego->setObjectName("btnContinuarJuego");
-        btnContinuarJuego->setMinimumSize(QSize(0, 55));
-        QFont font3;
-        font3.setPointSize(14);
-        font3.setBold(true);
-        btnContinuarJuego->setFont(font3);
         btnContinuarJuego->setEnabled(false);
+        btnContinuarJuego->setMinimumSize(QSize(0, 55));
+        btnContinuarJuego->setFont(font1);
 
         verticalLayout_dif->addWidget(btnContinuarJuego);
 
@@ -194,8 +246,11 @@ public:
         verticalLayout_3->setObjectName("verticalLayout_3");
         lblEstadoJuego = new QLabel(pageJuego);
         lblEstadoJuego->setObjectName("lblEstadoJuego");
+        QFont font3;
+        font3.setPointSize(14);
+        font3.setBold(true);
         lblEstadoJuego->setFont(font3);
-        lblEstadoJuego->setAlignment(Qt::AlignCenter);
+        lblEstadoJuego->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_3->addWidget(lblEstadoJuego);
 
@@ -242,7 +297,7 @@ public:
         btnOpciones = new QPushButton(pageJuego);
         btnOpciones->setObjectName("btnOpciones");
         btnOpciones->setMinimumSize(QSize(0, 40));
-        btnOpciones->setFont(font4);
+        btnOpciones->setFont(font1);
 
         horizontalLayout->addWidget(btnOpciones);
 
@@ -261,7 +316,7 @@ public:
         lblResultadoFin = new QLabel(pageFin);
         lblResultadoFin->setObjectName("lblResultadoFin");
         lblResultadoFin->setFont(font2);
-        lblResultadoFin->setAlignment(Qt::AlignCenter);
+        lblResultadoFin->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_4->addWidget(lblResultadoFin);
 
@@ -293,7 +348,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -303,9 +358,10 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "POO - Batalla de Elementos", nullptr));
         lblTitulo->setStyleSheet(QCoreApplication::translate("MainWindow", "color: #2c3e50;", nullptr));
-        lblTitulo->setText(QCoreApplication::translate("MainWindow", "\302\241Agua, Tierra y Fuego!", nullptr));
+        lblTitulo->setText(QCoreApplication::translate("MainWindow", "\302\241<span style=\"color: #2980b9;\">Agua</span>, <span style=\"color: #27ae60;\">Tierra</span> y <span style=\"color: #c0392b;\">Fuego</span>!", nullptr));
         btnIniciarJuego->setText(QCoreApplication::translate("MainWindow", "Iniciar Nueva Partida", nullptr));
         btnCargarJuegoInicio->setText(QCoreApplication::translate("MainWindow", "Cargar Partida Existente", nullptr));
+        btnSalir->setText(QCoreApplication::translate("MainWindow", "Salir del Juego", nullptr));
         lblTituloDificultad->setText(QCoreApplication::translate("MainWindow", "Selecciona la Dificultad de la IA", nullptr));
         btnDificultadAleatoria->setText(QCoreApplication::translate("MainWindow", "F\303\241cil (IA Aleatoria)", nullptr));
         btnDificultadEstrategica->setText(QCoreApplication::translate("MainWindow", "Normal (IA Estrat\303\251gica)", nullptr));
