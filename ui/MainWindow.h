@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <map>
 #include "../model/Partida.h"
 
 QT_BEGIN_NAMESPACE
@@ -37,6 +38,10 @@ private:
     Partida partida;
     int cartaSeleccionadaIndex = -1;
     TipoIA dificultadSeleccionada;
+
+    // Guardamos la salud anterior para poder animar la barra cuando recibe daño
+    std::map<int, int> saludAnteriorHumano;
+    std::map<int, int> saludAnteriorIA;
 
     void actualizarInterfaz();
     void limpiarLayout(QLayout* layout);

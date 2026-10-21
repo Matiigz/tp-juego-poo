@@ -134,8 +134,11 @@ debug/qrc_recursos.cpp: ../../recursos.qrc \
 		C:/Qt/6.12.0/mingw_64/bin/rcc.exe \
 		../../imagenes/agua.png \
 		../../imagenes/fuego.png \
+		../../imagenes/vapor.png \
+		../../imagenes/lava.png \
 		../../imagenes/tierra.png \
-		../../imagenes/cc70f896-a6ee-4185-a978-6fd627721f1e.png
+		../../imagenes/cc70f896-a6ee-4185-a978-6fd627721f1e.png \
+		../../imagenes/barro.png
 	C:\Qt\6.12.0\mingw_64\bin\rcc.exe -name recursos --no-zstd ..\..\recursos.qrc -o debug\qrc_recursos.cpp
 
 compiler_moc_predefs_make_all: debug/moc_predefs.h
@@ -1489,7 +1492,8 @@ debug/MainWindow.o: ../../ui/MainWindow.cpp ../../ui/MainWindow.h \
 		C:/Qt/6.12.0/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
 		C:/Qt/6.12.0/mingw_64/include/QtWidgets/QToolButton \
 		C:/Qt/6.12.0/mingw_64/include/QtWidgets/qtoolbutton.h \
-		C:/Qt/6.12.0/mingw_64/include/QtGui/QIcon
+		C:/Qt/6.12.0/mingw_64/include/QtGui/QIcon \
+		C:/Qt/6.12.0/mingw_64/include/QtGui/QTextCursor
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\MainWindow.o ..\..\ui\MainWindow.cpp
 
 debug/qrc_recursos.o: debug/qrc_recursos.cpp 
