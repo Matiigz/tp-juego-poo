@@ -27,7 +27,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_2;
     QStackedWidget *stackedWidget;
     QWidget *pageInicio;
     QVBoxLayout *verticalLayout_2;
@@ -36,11 +36,15 @@ public:
     QSpacerItem *verticalSpacer_2;
     QPushButton *btnIniciarJuego;
     QPushButton *btnCargarJuegoInicio;
+    QPushButton *btnSalir;
     QSpacerItem *verticalSpacer_3;
     QWidget *pageDificultad;
     QVBoxLayout *verticalLayout_dif;
     QSpacerItem *verticalSpacer_dif1;
     QLabel *lblTituloDificultad;
+    QHBoxLayout *horizontalLayout_3;
+    QPushButton *btnModoComun;
+    QPushButton *btnModoMixto;
     QSpacerItem *verticalSpacer_dif2;
     QPushButton *btnDificultadAleatoria;
     QPushButton *btnDificultadEstrategica;
@@ -51,11 +55,15 @@ public:
     QWidget *pageJuego;
     QVBoxLayout *verticalLayout_3;
     QLabel *lblEstadoJuego;
+    QHBoxLayout *layoutJuegoPrincipal;
+    QVBoxLayout *layoutCartas;
     QLabel *lblIA;
     QHBoxLayout *layoutCartasIA;
-    QTextEdit *logBatalla;
     QLabel *lblHumano;
     QHBoxLayout *layoutCartasHumano;
+    QVBoxLayout *layoutLog;
+    QLabel *lblTipoIA;
+    QTextEdit *logBatalla;
     QHBoxLayout *horizontalLayout;
     QPushButton *btnAtacar;
     QPushButton *btnOpciones;
@@ -64,6 +72,7 @@ public:
     QSpacerItem *verticalSpacer_4;
     QLabel *lblResultadoFin;
     QSpacerItem *verticalSpacer_5;
+    QPushButton *btnContinuarPartida;
     QPushButton *btnGuardarFin;
     QPushButton *btnVolverMenu;
     QSpacerItem *verticalSpacer_6;
@@ -72,15 +81,52 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(850, 650);
+        MainWindow->resize(900, 650);
+        MainWindow->setStyleSheet(QString::fromUtf8("/* Estilo base para todos los botones */\n"
+"QPushButton {\n"
+"    background-color: #2c3e50;\n"
+"    color: #ffffff;\n"
+"    border: 2px solid #34495e;\n"
+"    border-radius: 15px;\n"
+"    padding: 10px;\n"
+"    font-family: \"Segoe UI\", Arial, sans-serif;\n"
+"    font-size: 14px;\n"
+"    font-weight: bold;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: #34495e;\n"
+"    border: 2px solid #3498db;\n"
+"    color: #ecf0f1;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: #2980b9;\n"
+"    border: 2px solid #2980b9;\n"
+"    padding-top: 12px;\n"
+"    padding-bottom: 8px;\n"
+"}\n"
+"QPushButton#btnSalir {\n"
+"    background-color: #c0392b;\n"
+"    border: 2px solid #e74c3c;\n"
+"}\n"
+"QPushButton#btnSalir:hover {\n"
+"    background-color: #e74c3c;\n"
+"    border: 2px solid #ff7979;\n"
+"}\n"
+"QPushButton#btnSalir:pressed {\n"
+"    background-color: #a5281b;\n"
+"    border: 2px solid #a5281b;\n"
+"}"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        verticalLayout = new QVBoxLayout(centralwidget);
-        verticalLayout->setObjectName("verticalLayout");
+        horizontalLayout_2 = new QHBoxLayout(centralwidget);
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
         pageInicio = new QWidget();
         pageInicio->setObjectName("pageInicio");
+        pageInicio->setStyleSheet(QString::fromUtf8("#pageInicio {\n"
+"	border-image: url(:/imagenes/cc70f896-a6ee-4185-a978-6fd627721f1e.png) 0 0 0 0 stretch stretch;\n"
+"}"));
         verticalLayout_2 = new QVBoxLayout(pageInicio);
         verticalLayout_2->setObjectName("verticalLayout_2");
         verticalSpacer = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
@@ -93,7 +139,7 @@ public:
         font.setPointSize(24);
         font.setBold(true);
         lblTitulo->setFont(font);
-        lblTitulo->setAlignment(Qt::AlignCenter);
+        lblTitulo->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_2->addWidget(lblTitulo);
 
@@ -104,19 +150,20 @@ public:
         btnIniciarJuego = new QPushButton(pageInicio);
         btnIniciarJuego->setObjectName("btnIniciarJuego");
         btnIniciarJuego->setMinimumSize(QSize(0, 50));
-        QFont font1;
-        font1.setPointSize(12);
-        font1.setBold(true);
-        btnIniciarJuego->setFont(font1);
 
         verticalLayout_2->addWidget(btnIniciarJuego);
 
         btnCargarJuegoInicio = new QPushButton(pageInicio);
         btnCargarJuegoInicio->setObjectName("btnCargarJuegoInicio");
         btnCargarJuegoInicio->setMinimumSize(QSize(0, 50));
-        btnCargarJuegoInicio->setFont(font1);
 
         verticalLayout_2->addWidget(btnCargarJuegoInicio);
+
+        btnSalir = new QPushButton(pageInicio);
+        btnSalir->setObjectName("btnSalir");
+        btnSalir->setMinimumSize(QSize(50, 50));
+
+        verticalLayout_2->addWidget(btnSalir);
 
         verticalSpacer_3 = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
@@ -133,13 +180,28 @@ public:
 
         lblTituloDificultad = new QLabel(pageDificultad);
         lblTituloDificultad->setObjectName("lblTituloDificultad");
-        QFont font2;
-        font2.setPointSize(20);
-        font2.setBold(true);
-        lblTituloDificultad->setFont(font2);
-        lblTituloDificultad->setAlignment(Qt::AlignCenter);
+        QFont font1;
+        font1.setPointSize(20);
+        font1.setBold(true);
+        lblTituloDificultad->setFont(font1);
+        lblTituloDificultad->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_dif->addWidget(lblTituloDificultad);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
+        btnModoComun = new QPushButton(pageDificultad);
+        btnModoComun->setObjectName("btnModoComun");
+
+        horizontalLayout_3->addWidget(btnModoComun);
+
+        btnModoMixto = new QPushButton(pageDificultad);
+        btnModoMixto->setObjectName("btnModoMixto");
+
+        horizontalLayout_3->addWidget(btnModoMixto);
+
+
+        verticalLayout_dif->addLayout(horizontalLayout_3);
 
         verticalSpacer_dif2 = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
@@ -148,21 +210,19 @@ public:
         btnDificultadAleatoria = new QPushButton(pageDificultad);
         btnDificultadAleatoria->setObjectName("btnDificultadAleatoria");
         btnDificultadAleatoria->setMinimumSize(QSize(0, 50));
-        btnDificultadAleatoria->setFont(font1);
+        btnDificultadAleatoria->setStyleSheet(QString::fromUtf8(""));
 
         verticalLayout_dif->addWidget(btnDificultadAleatoria);
 
         btnDificultadEstrategica = new QPushButton(pageDificultad);
         btnDificultadEstrategica->setObjectName("btnDificultadEstrategica");
         btnDificultadEstrategica->setMinimumSize(QSize(0, 50));
-        btnDificultadEstrategica->setFont(font1);
 
         verticalLayout_dif->addWidget(btnDificultadEstrategica);
 
         btnDificultadSuperIA = new QPushButton(pageDificultad);
         btnDificultadSuperIA->setObjectName("btnDificultadSuperIA");
         btnDificultadSuperIA->setMinimumSize(QSize(0, 50));
-        btnDificultadSuperIA->setFont(font1);
 
         verticalLayout_dif->addWidget(btnDificultadSuperIA);
 
@@ -172,12 +232,8 @@ public:
 
         btnContinuarJuego = new QPushButton(pageDificultad);
         btnContinuarJuego->setObjectName("btnContinuarJuego");
-        btnContinuarJuego->setMinimumSize(QSize(0, 55));
-        QFont font3;
-        font3.setPointSize(14);
-        font3.setBold(true);
-        btnContinuarJuego->setFont(font3);
         btnContinuarJuego->setEnabled(false);
+        btnContinuarJuego->setMinimumSize(QSize(0, 55));
 
         verticalLayout_dif->addWidget(btnContinuarJuego);
 
@@ -190,59 +246,86 @@ public:
         stackedWidget->addWidget(pageDificultad);
         pageJuego = new QWidget();
         pageJuego->setObjectName("pageJuego");
+        pageJuego->setStyleSheet(QString::fromUtf8(""));
         verticalLayout_3 = new QVBoxLayout(pageJuego);
         verticalLayout_3->setObjectName("verticalLayout_3");
         lblEstadoJuego = new QLabel(pageJuego);
         lblEstadoJuego->setObjectName("lblEstadoJuego");
-        lblEstadoJuego->setFont(font3);
-        lblEstadoJuego->setAlignment(Qt::AlignCenter);
+        QFont font2;
+        font2.setPointSize(14);
+        font2.setBold(true);
+        lblEstadoJuego->setFont(font2);
+        lblEstadoJuego->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_3->addWidget(lblEstadoJuego);
 
+        layoutJuegoPrincipal = new QHBoxLayout();
+        layoutJuegoPrincipal->setObjectName("layoutJuegoPrincipal");
+        layoutCartas = new QVBoxLayout();
+        layoutCartas->setObjectName("layoutCartas");
         lblIA = new QLabel(pageJuego);
         lblIA->setObjectName("lblIA");
-        QFont font4;
-        font4.setBold(true);
-        lblIA->setFont(font4);
+        QFont font3;
+        font3.setBold(true);
+        lblIA->setFont(font3);
 
-        verticalLayout_3->addWidget(lblIA);
+        layoutCartas->addWidget(lblIA);
 
         layoutCartasIA = new QHBoxLayout();
         layoutCartasIA->setObjectName("layoutCartasIA");
 
-        verticalLayout_3->addLayout(layoutCartasIA);
-
-        logBatalla = new QTextEdit(pageJuego);
-        logBatalla->setObjectName("logBatalla");
-        logBatalla->setMaximumSize(QSize(16777215, 150));
-        logBatalla->setReadOnly(true);
-
-        verticalLayout_3->addWidget(logBatalla);
+        layoutCartas->addLayout(layoutCartasIA);
 
         lblHumano = new QLabel(pageJuego);
         lblHumano->setObjectName("lblHumano");
-        lblHumano->setFont(font4);
+        lblHumano->setFont(font3);
 
-        verticalLayout_3->addWidget(lblHumano);
+        layoutCartas->addWidget(lblHumano);
 
         layoutCartasHumano = new QHBoxLayout();
         layoutCartasHumano->setObjectName("layoutCartasHumano");
 
-        verticalLayout_3->addLayout(layoutCartasHumano);
+        layoutCartas->addLayout(layoutCartasHumano);
+
+
+        layoutJuegoPrincipal->addLayout(layoutCartas);
+
+        layoutLog = new QVBoxLayout();
+        layoutLog->setObjectName("layoutLog");
+        lblTipoIA = new QLabel(pageJuego);
+        lblTipoIA->setObjectName("lblTipoIA");
+        QFont font4;
+        font4.setPointSize(11);
+        font4.setBold(true);
+        lblTipoIA->setFont(font4);
+        lblTipoIA->setAlignment(Qt::AlignmentFlag::AlignCenter);
+
+        layoutLog->addWidget(lblTipoIA);
+
+        logBatalla = new QTextEdit(pageJuego);
+        logBatalla->setObjectName("logBatalla");
+        logBatalla->setMaximumSize(QSize(320, 16777215));
+        logBatalla->setReadOnly(true);
+
+        layoutLog->addWidget(logBatalla);
+
+
+        layoutJuegoPrincipal->addLayout(layoutLog);
+
+
+        verticalLayout_3->addLayout(layoutJuegoPrincipal);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
         btnAtacar = new QPushButton(pageJuego);
         btnAtacar->setObjectName("btnAtacar");
         btnAtacar->setMinimumSize(QSize(0, 40));
-        btnAtacar->setFont(font1);
 
         horizontalLayout->addWidget(btnAtacar);
 
         btnOpciones = new QPushButton(pageJuego);
         btnOpciones->setObjectName("btnOpciones");
         btnOpciones->setMinimumSize(QSize(0, 40));
-        btnOpciones->setFont(font4);
 
         horizontalLayout->addWidget(btnOpciones);
 
@@ -252,6 +335,8 @@ public:
         stackedWidget->addWidget(pageJuego);
         pageFin = new QWidget();
         pageFin->setObjectName("pageFin");
+        pageFin->setStyleSheet(QString::fromUtf8("background-image: url(:/imagenes/fondo juego.webp)\n"
+" 0 0 0 0 stretch stretch;"));
         verticalLayout_4 = new QVBoxLayout(pageFin);
         verticalLayout_4->setObjectName("verticalLayout_4");
         verticalSpacer_4 = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
@@ -260,14 +345,19 @@ public:
 
         lblResultadoFin = new QLabel(pageFin);
         lblResultadoFin->setObjectName("lblResultadoFin");
-        lblResultadoFin->setFont(font2);
-        lblResultadoFin->setAlignment(Qt::AlignCenter);
+        lblResultadoFin->setFont(font1);
+        lblResultadoFin->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_4->addWidget(lblResultadoFin);
 
         verticalSpacer_5 = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_4->addItem(verticalSpacer_5);
+
+        btnContinuarPartida = new QPushButton(pageFin);
+        btnContinuarPartida->setObjectName("btnContinuarPartida");
+
+        verticalLayout_4->addWidget(btnContinuarPartida);
 
         btnGuardarFin = new QPushButton(pageFin);
         btnGuardarFin->setObjectName("btnGuardarFin");
@@ -287,13 +377,13 @@ public:
 
         stackedWidget->addWidget(pageFin);
 
-        verticalLayout->addWidget(stackedWidget);
+        horizontalLayout_2->addWidget(stackedWidget);
 
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -302,11 +392,13 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "POO - Batalla de Elementos", nullptr));
-        lblTitulo->setStyleSheet(QCoreApplication::translate("MainWindow", "color: #2c3e50;", nullptr));
-        lblTitulo->setText(QCoreApplication::translate("MainWindow", "\302\241Agua, Tierra y Fuego!", nullptr));
+        lblTitulo->setText(QCoreApplication::translate("MainWindow", "\302\241<span style=\"color: #2980b9;\">Agua</span>, <span style=\"color: #27ae60;\">Tierra</span> y <span style=\"color: #c0392b;\">Fuego</span>!", nullptr));
         btnIniciarJuego->setText(QCoreApplication::translate("MainWindow", "Iniciar Nueva Partida", nullptr));
         btnCargarJuegoInicio->setText(QCoreApplication::translate("MainWindow", "Cargar Partida Existente", nullptr));
+        btnSalir->setText(QCoreApplication::translate("MainWindow", "Salir del Juego", nullptr));
         lblTituloDificultad->setText(QCoreApplication::translate("MainWindow", "Selecciona la Dificultad de la IA", nullptr));
+        btnModoComun->setText(QCoreApplication::translate("MainWindow", "Modo Com\303\272n", nullptr));
+        btnModoMixto->setText(QCoreApplication::translate("MainWindow", "Modo Mixto", nullptr));
         btnDificultadAleatoria->setText(QCoreApplication::translate("MainWindow", "F\303\241cil (IA Aleatoria)", nullptr));
         btnDificultadEstrategica->setText(QCoreApplication::translate("MainWindow", "Normal (IA Estrat\303\251gica)", nullptr));
         btnDificultadSuperIA->setText(QCoreApplication::translate("MainWindow", "Dif\303\255cil (Super IA)", nullptr));
@@ -316,11 +408,12 @@ public:
         lblEstadoJuego->setText(QCoreApplication::translate("MainWindow", "Ronda 1", nullptr));
         lblIA->setText(QCoreApplication::translate("MainWindow", "Cartas de la IA Enemiga:", nullptr));
         lblHumano->setText(QCoreApplication::translate("MainWindow", "Tus Cartas (Selecciona una para atacar):", nullptr));
+        lblTipoIA->setStyleSheet(QCoreApplication::translate("MainWindow", "background-color: #8e44ad; color: white; padding: 5px; border-radius: 5px;", nullptr));
+        lblTipoIA->setText(QCoreApplication::translate("MainWindow", "Contra: IA", nullptr));
         btnAtacar->setStyleSheet(QCoreApplication::translate("MainWindow", "background-color: #e74c3c; color: white;", nullptr));
         btnAtacar->setText(QCoreApplication::translate("MainWindow", "ATACAR CON CARTA", nullptr));
         btnOpciones->setText(QCoreApplication::translate("MainWindow", "Pausar / Guardar", nullptr));
-        lblResultadoFin->setStyleSheet(QCoreApplication::translate("MainWindow", "color: #2c3e50;", nullptr));
-        lblResultadoFin->setText(QCoreApplication::translate("MainWindow", "Estado de la partida", nullptr));
+        btnContinuarPartida->setText(QCoreApplication::translate("MainWindow", "Continuar Partida", nullptr));
         btnGuardarFin->setText(QCoreApplication::translate("MainWindow", "Guardar Partida", nullptr));
         btnVolverMenu->setText(QCoreApplication::translate("MainWindow", "Volver al Men\303\272 Principal", nullptr));
     } // retranslateUi

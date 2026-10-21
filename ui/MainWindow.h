@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <map>
 #include "../model/Partida.h"
 
 QT_BEGIN_NAMESPACE
@@ -19,29 +20,42 @@ public:
 private slots:
     void onIniciarJuegoClicked();
     void onCargarJuegoInicioClicked();
-    
-    // --- Slots para la Dificultad ---
+
     void onDificultadAleatoriaClicked();
     void onDificultadEstrategicaClicked();
     void onDificultadSuperIAClicked();
-    void onContinuarJuegoClicked(); // NUEVO BOTON
+
+    // Nuevos slots para los modos
+    void onModoComunClicked();
+    void onModoMixtoClicked();
+
+    void onContinuarJuegoClicked();
     void onVolverDificultadClicked();
 
     void onAtacarClicked();
     void onOpcionesClicked();
     void onGuardarFinClicked();
     void onVolverMenuClicked();
+    void onContinuarPartidaClicked();
 
 private:
     Ui::MainWindow *ui;
     Partida partida;
     int cartaSeleccionadaIndex = -1;
-    TipoIA dificultadSeleccionada; // Guarda lo que elijamos
+    TipoIA dificultadSeleccionada;
+    ModoJuego modoSeleccionado = ModoJuego::COMUN;
+
+    bool seleccionoDificultad = false;
+    bool seleccionoModo = false;
+
+    std::map<int, int> saludAnteriorHumano;
+    std::map<int, int> saludAnteriorIA;
 
     void actualizarInterfaz();
     void limpiarLayout(QLayout* layout);
     void iniciarPartidaConDificultad(TipoIA tipo);
-    void resaltarBotonDificultad(QPushButton* botonActivo); // Pinta el botón elegido
+    void resaltarBotonDificultad(QPushButton* botonActivo);
+    void verificarInicioPermitido();
 };
 
 #endif // MAINWINDOW_H

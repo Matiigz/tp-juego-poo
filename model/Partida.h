@@ -6,12 +6,15 @@
 #include "EstrategiaIA.h"
 #include <memory>
 
+enum class ModoJuego { COMUN, MIXTO };
+
 class Partida {
 private:
     Jugador humano;
     Jugador ia;
     GestorDanio gestorDanio;
     TipoIA tipoIA;
+    ModoJuego modoJuego;
     int rondaActual;
     int elementosPorJugador;
 
@@ -25,9 +28,12 @@ public:
     Jugador& getIA() { return ia; }
     const GestorDanio& getGestorDanio() const { return gestorDanio; }
     GestorDanio& getGestorDanioRef() { return gestorDanio; }
-    
+
     TipoIA getTipoIA() const { return tipoIA; }
     void setTipoIA(TipoIA t) { tipoIA = t; }
+
+    ModoJuego getModoJuego() const { return modoJuego; }
+    void setModoJuego(ModoJuego m) { modoJuego = m; }
 
     int getRonda() const { return rondaActual; }
     void setRonda(int r) { rondaActual = r; }
