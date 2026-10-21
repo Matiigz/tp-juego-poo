@@ -21,10 +21,14 @@ private slots:
     void onIniciarJuegoClicked();
     void onCargarJuegoInicioClicked();
 
-    // --- Slots para la Dificultad ---
     void onDificultadAleatoriaClicked();
     void onDificultadEstrategicaClicked();
     void onDificultadSuperIAClicked();
+
+    // Nuevos slots para los modos
+    void onModoComunClicked();
+    void onModoMixtoClicked();
+
     void onContinuarJuegoClicked();
     void onVolverDificultadClicked();
 
@@ -32,14 +36,18 @@ private slots:
     void onOpcionesClicked();
     void onGuardarFinClicked();
     void onVolverMenuClicked();
+    void onContinuarPartidaClicked();
 
 private:
     Ui::MainWindow *ui;
     Partida partida;
     int cartaSeleccionadaIndex = -1;
     TipoIA dificultadSeleccionada;
+    ModoJuego modoSeleccionado = ModoJuego::COMUN;
 
-    // Guardamos la salud anterior para poder animar la barra cuando recibe daño
+    bool seleccionoDificultad = false;
+    bool seleccionoModo = false;
+
     std::map<int, int> saludAnteriorHumano;
     std::map<int, int> saludAnteriorIA;
 
@@ -47,6 +55,7 @@ private:
     void limpiarLayout(QLayout* layout);
     void iniciarPartidaConDificultad(TipoIA tipo);
     void resaltarBotonDificultad(QPushButton* botonActivo);
+    void verificarInicioPermitido();
 };
 
 #endif // MAINWINDOW_H

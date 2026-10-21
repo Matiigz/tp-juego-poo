@@ -8,6 +8,7 @@ SOURCES += \
     model/Jugador.cpp \
     model/EstrategiaIA.cpp \
     model/Partida.cpp \
+    model/elementosmixtos.cpp \
     persistence/GestorConfiguracion.cpp \
     persistence/GestorPersistencia.cpp \
     ui/MainWindow.cpp
@@ -21,6 +22,7 @@ HEADERS += \
     model/Jugador.h \
     model/EstrategiaIA.h \
     model/Partida.h \
+    model/elementosmixtos.h \
     persistence/GestorConfiguracion.h \
     persistence/GestorPersistencia.h \
     ui/MainWindow.h

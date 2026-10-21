@@ -7,5 +7,9 @@
         <file>imagenes/lava.png</file>
         <file>imagenes/vapor.png</file>
         <file>imagenes/barro.png</file>
+        <file>imagenes/fondo juego.jpg</file>
+        <file>imagenes/dificil_1.png</file>
+        <file>imagenes/facil_1.png</file>
+        <file>imagenes/normal_1.png</file>
     </qresource>
 </RCC>

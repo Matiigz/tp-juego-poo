@@ -50,11 +50,11 @@ QPushButton#btnSalir:pressed {
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="pageInicio">
        <property name="styleSheet">
@@ -191,6 +191,24 @@ QPushButton#btnSalir:pressed {
          </widget>
         </item>
         <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QPushButton" name="btnModoComun">
+            <property name="text">
+             <string>Modo Común</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnModoMixto">
+            <property name="text">
+             <string>Modo Mixto</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
          <spacer name="verticalSpacer_dif2">
           <property name="orientation">
            <enum>Qt::Orientation::Vertical</enum>
@@ -210,6 +228,9 @@ QPushButton#btnSalir:pressed {
             <width>0</width>
             <height>50</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Fácil (IA Aleatoria)</string>
@@ -290,6 +311,9 @@ QPushButton#btnSalir:pressed {
        </layout>
       </widget>
       <widget class="QWidget" name="pageJuego">
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QLabel" name="lblEstadoJuego">
@@ -417,6 +441,10 @@ QPushButton#btnSalir:pressed {
        </layout>
       </widget>
       <widget class="QWidget" name="pageFin">
+       <property name="styleSheet">
+        <string notr="true">background-image: url(:/imagenes/fondo juego.webp)
+ 0 0 0 0 stretch stretch;</string>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <spacer name="verticalSpacer_4">
@@ -456,6 +484,13 @@ QPushButton#btnSalir:pressed {
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnContinuarPartida">
+          <property name="text">
+           <string>Continuar Partida</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="btnGuardarFin">

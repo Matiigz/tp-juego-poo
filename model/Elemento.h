@@ -4,7 +4,7 @@
 #include <QString>
 #include <algorithm>
 
-enum class TipoElemento { AGUA, TIERRA, FUEGO, DESCONOCIDO };
+enum class TipoElemento { AGUA, TIERRA, FUEGO, BARRO, LAVA, VAPOR, DESCONOCIDO };
 
 class Elemento {
 protected:
@@ -19,6 +19,9 @@ public:
     TipoElemento getTipo() const { return tipo; }
     bool estaVivo() const { return energia > 0.0; }
 
+    virtual TipoElemento getTipoAtaque() const { return tipo; }
+    virtual TipoElemento getTipoDefensa() const { return tipo; }
+
     void reducirEnergia(double cantidad) {
         energia = std::max(0.0, energia - cantidad);
     }
@@ -28,13 +31,16 @@ public:
     }
 
     virtual QString getNombreTipo() const = 0;
-    
+
     static QString tipoToString(TipoElemento t) {
         switch (t) {
-            case TipoElemento::AGUA: return "AGUA";
-            case TipoElemento::TIERRA: return "TIERRA";
-            case TipoElemento::FUEGO: return "FUEGO";
-            default: return "DESCONOCIDO";
+        case TipoElemento::AGUA: return "AGUA";
+        case TipoElemento::TIERRA: return "TIERRA";
+        case TipoElemento::FUEGO: return "FUEGO";
+        case TipoElemento::BARRO: return "BARRO";
+        case TipoElemento::LAVA: return "LAVA";
+        case TipoElemento::VAPOR: return "VAPOR";
+        default: return "DESCONOCIDO";
         }
     }
 
@@ -42,6 +48,9 @@ public:
         if (str.toUpper() == "AGUA") return TipoElemento::AGUA;
         if (str.toUpper() == "TIERRA") return TipoElemento::TIERRA;
         if (str.toUpper() == "FUEGO") return TipoElemento::FUEGO;
+        if (str.toUpper() == "BARRO") return TipoElemento::BARRO;
+        if (str.toUpper() == "LAVA") return TipoElemento::LAVA;
+        if (str.toUpper() == "VAPOR") return TipoElemento::VAPOR;
         return TipoElemento::DESCONOCIDO;
     }
 };

@@ -27,7 +27,7 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_2;
     QStackedWidget *stackedWidget;
     QWidget *pageInicio;
     QVBoxLayout *verticalLayout_2;
@@ -42,6 +42,9 @@ public:
     QVBoxLayout *verticalLayout_dif;
     QSpacerItem *verticalSpacer_dif1;
     QLabel *lblTituloDificultad;
+    QHBoxLayout *horizontalLayout_3;
+    QPushButton *btnModoComun;
+    QPushButton *btnModoMixto;
     QSpacerItem *verticalSpacer_dif2;
     QPushButton *btnDificultadAleatoria;
     QPushButton *btnDificultadEstrategica;
@@ -69,6 +72,7 @@ public:
     QSpacerItem *verticalSpacer_4;
     QLabel *lblResultadoFin;
     QSpacerItem *verticalSpacer_5;
+    QPushButton *btnContinuarPartida;
     QPushButton *btnGuardarFin;
     QPushButton *btnVolverMenu;
     QSpacerItem *verticalSpacer_6;
@@ -114,8 +118,8 @@ public:
 "}"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        verticalLayout = new QVBoxLayout(centralwidget);
-        verticalLayout->setObjectName("verticalLayout");
+        horizontalLayout_2 = new QHBoxLayout(centralwidget);
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
         pageInicio = new QWidget();
@@ -184,6 +188,21 @@ public:
 
         verticalLayout_dif->addWidget(lblTituloDificultad);
 
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
+        btnModoComun = new QPushButton(pageDificultad);
+        btnModoComun->setObjectName("btnModoComun");
+
+        horizontalLayout_3->addWidget(btnModoComun);
+
+        btnModoMixto = new QPushButton(pageDificultad);
+        btnModoMixto->setObjectName("btnModoMixto");
+
+        horizontalLayout_3->addWidget(btnModoMixto);
+
+
+        verticalLayout_dif->addLayout(horizontalLayout_3);
+
         verticalSpacer_dif2 = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_dif->addItem(verticalSpacer_dif2);
@@ -191,6 +210,7 @@ public:
         btnDificultadAleatoria = new QPushButton(pageDificultad);
         btnDificultadAleatoria->setObjectName("btnDificultadAleatoria");
         btnDificultadAleatoria->setMinimumSize(QSize(0, 50));
+        btnDificultadAleatoria->setStyleSheet(QString::fromUtf8(""));
 
         verticalLayout_dif->addWidget(btnDificultadAleatoria);
 
@@ -226,6 +246,7 @@ public:
         stackedWidget->addWidget(pageDificultad);
         pageJuego = new QWidget();
         pageJuego->setObjectName("pageJuego");
+        pageJuego->setStyleSheet(QString::fromUtf8(""));
         verticalLayout_3 = new QVBoxLayout(pageJuego);
         verticalLayout_3->setObjectName("verticalLayout_3");
         lblEstadoJuego = new QLabel(pageJuego);
@@ -314,6 +335,8 @@ public:
         stackedWidget->addWidget(pageJuego);
         pageFin = new QWidget();
         pageFin->setObjectName("pageFin");
+        pageFin->setStyleSheet(QString::fromUtf8("background-image: url(:/imagenes/fondo juego.webp)\n"
+" 0 0 0 0 stretch stretch;"));
         verticalLayout_4 = new QVBoxLayout(pageFin);
         verticalLayout_4->setObjectName("verticalLayout_4");
         verticalSpacer_4 = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
@@ -330,6 +353,11 @@ public:
         verticalSpacer_5 = new QSpacerItem(0, 0, QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
 
         verticalLayout_4->addItem(verticalSpacer_5);
+
+        btnContinuarPartida = new QPushButton(pageFin);
+        btnContinuarPartida->setObjectName("btnContinuarPartida");
+
+        verticalLayout_4->addWidget(btnContinuarPartida);
 
         btnGuardarFin = new QPushButton(pageFin);
         btnGuardarFin->setObjectName("btnGuardarFin");
@@ -349,13 +377,13 @@ public:
 
         stackedWidget->addWidget(pageFin);
 
-        verticalLayout->addWidget(stackedWidget);
+        horizontalLayout_2->addWidget(stackedWidget);
 
         MainWindow->setCentralWidget(centralwidget);
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -369,6 +397,8 @@ public:
         btnCargarJuegoInicio->setText(QCoreApplication::translate("MainWindow", "Cargar Partida Existente", nullptr));
         btnSalir->setText(QCoreApplication::translate("MainWindow", "Salir del Juego", nullptr));
         lblTituloDificultad->setText(QCoreApplication::translate("MainWindow", "Selecciona la Dificultad de la IA", nullptr));
+        btnModoComun->setText(QCoreApplication::translate("MainWindow", "Modo Com\303\272n", nullptr));
+        btnModoMixto->setText(QCoreApplication::translate("MainWindow", "Modo Mixto", nullptr));
         btnDificultadAleatoria->setText(QCoreApplication::translate("MainWindow", "F\303\241cil (IA Aleatoria)", nullptr));
         btnDificultadEstrategica->setText(QCoreApplication::translate("MainWindow", "Normal (IA Estrat\303\251gica)", nullptr));
         btnDificultadSuperIA->setText(QCoreApplication::translate("MainWindow", "Dif\303\255cil (Super IA)", nullptr));
@@ -383,6 +413,7 @@ public:
         btnAtacar->setStyleSheet(QCoreApplication::translate("MainWindow", "background-color: #e74c3c; color: white;", nullptr));
         btnAtacar->setText(QCoreApplication::translate("MainWindow", "ATACAR CON CARTA", nullptr));
         btnOpciones->setText(QCoreApplication::translate("MainWindow", "Pausar / Guardar", nullptr));
+        btnContinuarPartida->setText(QCoreApplication::translate("MainWindow", "Continuar Partida", nullptr));
         btnGuardarFin->setText(QCoreApplication::translate("MainWindow", "Guardar Partida", nullptr));
         btnVolverMenu->setText(QCoreApplication::translate("MainWindow", "Volver al Men\303\272 Principal", nullptr));
     } // retranslateUi
