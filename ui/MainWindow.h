@@ -21,11 +21,14 @@ private slots:
     void onIniciarJuegoClicked();
     void onCargarJuegoInicioClicked();
 
+    void onReglasClicked();
+    void onReglasJuegoClicked();        // <- NUEVO: Abrir reglas desde el juego
+    void onVolverReglasClicked();
+
     void onDificultadAleatoriaClicked();
     void onDificultadEstrategicaClicked();
     void onDificultadSuperIAClicked();
 
-    // Nuevos slots para los modos
     void onModoComunClicked();
     void onModoMixtoClicked();
 
@@ -38,6 +41,8 @@ private slots:
     void onVolverMenuClicked();
     void onContinuarPartidaClicked();
 
+    void onAyudaIAClicked();
+
 private:
     Ui::MainWindow *ui;
     Partida partida;
@@ -47,6 +52,9 @@ private:
 
     bool seleccionoDificultad = false;
     bool seleccionoModo = false;
+
+    int pistasRestantes = 0;
+    QWidget* paginaAnteriorReglas = nullptr;
 
     std::map<int, int> saludAnteriorHumano;
     std::map<int, int> saludAnteriorIA;

@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>imagenes/agua.png</file>
+        <file>imagenes/fuego.png</file>
         <file>imagenes/tierra.png</file>
         <file>imagenes/cc70f896-a6ee-4185-a978-6fd627721f1e.png</file>
         <file>imagenes/lava.png</file>
@@ -10,6 +11,7 @@
         <file>imagenes/dificil_1.png</file>
         <file>imagenes/facil_1.png</file>
         <file>imagenes/normal_1.png</file>
-        <file>imagenes/fuego.png</file>
+        <file>imagenes/victoria.png</file>
+        <file>imagenes/derrota.png</file>
     </qresource>
 </RCC>
