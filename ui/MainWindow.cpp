@@ -22,9 +22,13 @@ MainWindow::MainWindow(QWidget *parent)
     // --- MAGIA DEL FONDO ---
     ui->pageJuego->setAttribute(Qt::WA_StyledBackground, true);
     ui->pageFin->setAttribute(Qt::WA_StyledBackground, true);
+    ui->pageDificultad->setAttribute(Qt::WA_StyledBackground, true);
+    ui->pageReglas->setAttribute(Qt::WA_StyledBackground, true);
 
+    ui->pageDificultad->setStyleSheet("#pageDificultad { border-image: url(':/imagenes/fondo juego.jpg') 0 0 0 0 stretch stretch; }");
     ui->pageJuego->setStyleSheet("#pageJuego { border-image: url(':/imagenes/fondo juego.jpg') 0 0 0 0 stretch stretch; }");
     ui->pageFin->setStyleSheet("#pageFin { border-image: url(':/imagenes/fondo juego.jpg') 0 0 0 0 stretch stretch; }");
+    ui->pageReglas->setStyleSheet("#pageReglas { border-image: url(':/imagenes/fondo juego.jpg') 0 0 0 0 stretch stretch; }");
 
     ui->logBatalla->setStyleSheet("background-color: rgba(255, 255, 255, 220); border-radius: 8px; color: black;");
     // ----------------------------
@@ -71,6 +75,7 @@ MainWindow::MainWindow(QWidget *parent)
         "    border: 3px solid #e74c3c;"
         "}"
         );
+
     if (QLayout* layoutDificultad = ui->btnDificultadAleatoria->parentWidget()->layout()) {
         layoutDificultad->setAlignment(ui->btnDificultadAleatoria, Qt::AlignHCenter);
         layoutDificultad->setAlignment(ui->btnDificultadEstrategica, Qt::AlignHCenter);
@@ -81,17 +86,18 @@ MainWindow::MainWindow(QWidget *parent)
     GestorConfiguracion::cargarConfiguracion("config.json", partida);
     ui->stackedWidget->setCurrentWidget(ui->pageInicio);
 
-    // Conexiones de botones principales
+    // Conexiones de botones principales y reglas
     connect(ui->btnIniciarJuego, &QPushButton::clicked, this, &MainWindow::onIniciarJuegoClicked);
     connect(ui->btnCargarJuegoInicio, &QPushButton::clicked, this, &MainWindow::onCargarJuegoInicioClicked);
+    connect(ui->btnReglas, &QPushButton::clicked, this, &MainWindow::onReglasClicked);
+    connect(ui->btnReglasJuego, &QPushButton::clicked, this, &MainWindow::onReglasJuegoClicked);
+    connect(ui->btnVolverReglas, &QPushButton::clicked, this, &MainWindow::onVolverReglasClicked);
     connect(ui->btnSalir, &QPushButton::clicked, this, &MainWindow::close);
 
-    // Conexiones de dificultad
+    // Conexiones de dificultad y modos
     connect(ui->btnDificultadAleatoria, &QPushButton::clicked, this, &MainWindow::onDificultadAleatoriaClicked);
     connect(ui->btnDificultadEstrategica, &QPushButton::clicked, this, &MainWindow::onDificultadEstrategicaClicked);
     connect(ui->btnDificultadSuperIA, &QPushButton::clicked, this, &MainWindow::onDificultadSuperIAClicked);
-
-    // Conexiones de los modos (Común y Mixto)
     connect(ui->btnModoComun, &QPushButton::clicked, this, &MainWindow::onModoComunClicked);
     connect(ui->btnModoMixto, &QPushButton::clicked, this, &MainWindow::onModoMixtoClicked);
 
@@ -101,6 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Acciones in-game
     connect(ui->btnAtacar, &QPushButton::clicked, this, &MainWindow::onAtacarClicked);
+    connect(ui->btnAyudaIA, &QPushButton::clicked, this, &MainWindow::onAyudaIAClicked);
     connect(ui->btnOpciones, &QPushButton::clicked, this, &MainWindow::onOpcionesClicked);
     connect(ui->btnGuardarFin, &QPushButton::clicked, this, &MainWindow::onGuardarFinClicked);
     connect(ui->btnVolverMenu, &QPushButton::clicked, this, &MainWindow::onVolverMenuClicked);
@@ -109,6 +116,24 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {
     delete ui;
+}
+
+void MainWindow::onReglasClicked() {
+    paginaAnteriorReglas = ui->pageInicio;
+    ui->stackedWidget->setCurrentWidget(ui->pageReglas);
+}
+
+void MainWindow::onReglasJuegoClicked() {
+    paginaAnteriorReglas = ui->pageJuego;
+    ui->stackedWidget->setCurrentWidget(ui->pageReglas);
+}
+
+void MainWindow::onVolverReglasClicked() {
+    if (paginaAnteriorReglas) {
+        ui->stackedWidget->setCurrentWidget(paginaAnteriorReglas);
+    } else {
+        ui->stackedWidget->setCurrentWidget(ui->pageInicio);
+    }
 }
 
 void MainWindow::limpiarLayout(QLayout* layout) {
@@ -122,6 +147,10 @@ void MainWindow::limpiarLayout(QLayout* layout) {
 void MainWindow::actualizarInterfaz() {
     limpiarLayout(ui->layoutCartasHumano);
     limpiarLayout(ui->layoutCartasIA);
+
+    if (!partida.estaTerminada()) {
+        ui->btnAyudaIA->setEnabled(pistasRestantes > 0);
+    }
 
     auto renderizarCarta = [this](Elemento* elem, bool esHumano, int index, bool seleccionada) -> QWidget* {
         QWidget* contenedor = new QWidget();
@@ -196,12 +225,40 @@ void MainWindow::actualizarInterfaz() {
             btnCarta->setStyleSheet("QToolButton { background-color: rgba(236, 240, 241, 180); border: 2px dashed #95a5a6; border-radius: 10px; font-weight: bold; color: #7f8c8d; }");
         } else {
             QString estiloBorde = seleccionada ? "border: 4px solid #f1c40f;" : "border: 2px solid transparent;";
-            btnCarta->setIcon(QIcon(rutaBase + archivoImg));
-            btnCarta->setIconSize(QSize(110, 150));
-            btnCarta->setStyleSheet(QString(
-                                        "QToolButton { background-color: transparent; padding: 0px; margin: 0px; border-radius: 8px; %1 }"
-                                        "QToolButton:hover { border: 2px solid #3498db; background-color: rgba(255, 255, 255, 50); }"
-                                        ).arg(estiloBorde));
+
+            bool esElementoBasico = (elem->getTipo() == TipoElemento::AGUA ||
+                                     elem->getTipo() == TipoElemento::TIERRA ||
+                                     elem->getTipo() == TipoElemento::FUEGO);
+
+            if (esElementoBasico) {
+                btnCarta->setStyleSheet(QString(
+                                            "QToolButton {"
+                                            "    border-image: url('%1') 0 0 0 0 stretch stretch;"
+                                            "    background-color: transparent;"
+                                            "    border-radius: 8px;"
+                                            "    %2"
+                                            "}"
+                                            "QToolButton:hover {"
+                                            "    border: 2px solid #3498db;"
+                                            "}"
+                                            ).arg(rutaBase + archivoImg, estiloBorde));
+            } else {
+                btnCarta->setIcon(QIcon(rutaBase + archivoImg));
+                btnCarta->setIconSize(QSize(110, 150));
+                btnCarta->setStyleSheet(QString(
+                                            "QToolButton {"
+                                            "    background-color: transparent;"
+                                            "    padding: 0px;"
+                                            "    margin: 0px;"
+                                            "    border-radius: 8px;"
+                                            "    %1"
+                                            "}"
+                                            "QToolButton:hover {"
+                                            "    border: 2px solid #3498db;"
+                                            "    background-color: rgba(255, 255, 255, 50);"
+                                            "}"
+                                            ).arg(estiloBorde));
+            }
         }
 
         if (!esHumano || !elem->estaVivo()) {
@@ -235,7 +292,20 @@ void MainWindow::actualizarInterfaz() {
         ui->lblEstadoJuego->setStyleSheet("color: white; font-size: 16px; font-weight: bold; background-color: rgba(0,0,0,150); border-radius: 5px;");
         ui->lblEstadoJuego->setText("FIN DE LA PARTIDA");
         ui->btnAtacar->setEnabled(false);
-        ui->lblResultadoFin->setText(QString("¡PARTIDA FINALIZADA!\nGanador: %1").arg(partida.getGanador()));
+        ui->btnAyudaIA->setEnabled(false);
+
+        QString ganador = partida.getGanador();
+        ui->lblResultadoFin->setText(QString("¡PARTIDA FINALIZADA!\nGanador: %1").arg(ganador));
+
+        // --- LÓGICA DE FONDO DINÁMICO DE VICTORIA / DERROTA ---
+        if (ganador == "Jugador 1") {
+            ui->pageFin->setStyleSheet("#pageFin { border-image: url(':/imagenes/victoria.png') 0 0 0 0 stretch stretch; }");
+        } else {
+            ui->pageFin->setStyleSheet("#pageFin { border-image: url(':/imagenes/derrota.png') 0 0 0 0 stretch stretch; }");
+        }
+
+        ui->lblResultadoFin->setStyleSheet("color: white; background-color: rgba(0,0,0,150); border-radius: 10px; padding: 10px;");
+
         ui->btnGuardarFin->setEnabled(false);
         ui->btnContinuarPartida->setVisible(false);
         ui->stackedWidget->setCurrentWidget(ui->pageFin);
@@ -345,9 +415,21 @@ void MainWindow::iniciarPartidaConDificultad(TipoIA tipo) {
     saludAnteriorIA.clear();
 
     QString nombreIA;
-    if (tipo == TipoIA::ALEATORIA) nombreIA = "Modo: IA Aleatoria (Fácil)";
-    else if (tipo == TipoIA::ESTRATEGICA) nombreIA = "Modo: IA Estratégica (Normal)";
-    else nombreIA = "Modo: Súper IA (Difícil)";
+    if (tipo == TipoIA::ALEATORIA) {
+        nombreIA = "Modo: IA Aleatoria (Fácil)";
+        pistasRestantes = 3;
+    }
+    else if (tipo == TipoIA::ESTRATEGICA) {
+        nombreIA = "Modo: IA Estratégica (Normal)";
+        pistasRestantes = 2;
+    }
+    else {
+        nombreIA = "Modo: Súper IA (Difícil)";
+        pistasRestantes = 0;
+    }
+
+    ui->btnAyudaIA->setText(QString("💡 Pista de IA (%1)").arg(pistasRestantes));
+    ui->btnAyudaIA->setEnabled(pistasRestantes > 0);
 
     QString nombreModo = (modoSeleccionado == ModoJuego::MIXTO) ? " - MIXTO" : " - COMÚN";
     ui->lblTipoIA->setText(nombreIA + nombreModo);
@@ -368,9 +450,21 @@ void MainWindow::onCargarJuegoInicioClicked() {
             saludAnteriorIA.clear();
 
             QString nombreIA;
-            if (partida.getTipoIA() == TipoIA::ALEATORIA) nombreIA = "Modo: IA Aleatoria (Fácil)";
-            else if (partida.getTipoIA() == TipoIA::ESTRATEGICA) nombreIA = "Modo: IA Estratégica (Normal)";
-            else nombreIA = "Modo: Súper IA (Difícil)";
+            if (partida.getTipoIA() == TipoIA::ALEATORIA) {
+                nombreIA = "Modo: IA Aleatoria (Fácil)";
+                pistasRestantes = 3;
+            }
+            else if (partida.getTipoIA() == TipoIA::ESTRATEGICA) {
+                nombreIA = "Modo: IA Estratégica (Normal)";
+                pistasRestantes = 2;
+            }
+            else {
+                nombreIA = "Modo: Súper IA (Difícil)";
+                pistasRestantes = 0;
+            }
+
+            ui->btnAyudaIA->setText(QString("💡 Pista de IA (%1)").arg(pistasRestantes));
+            ui->btnAyudaIA->setEnabled(pistasRestantes > 0);
 
             QString nombreModo = (partida.getModoJuego() == ModoJuego::MIXTO) ? " - MIXTO" : " - COMÚN";
             ui->lblTipoIA->setText(nombreIA + nombreModo);
@@ -383,6 +477,34 @@ void MainWindow::onCargarJuegoInicioClicked() {
             QMessageBox::critical(this, "Error", "No se pudo cargar la partida.");
         }
     }
+}
+
+void MainWindow::onAyudaIAClicked() {
+    if (pistasRestantes <= 0) return;
+
+    const auto& elementosIA = partida.getIA().getElementos();
+    QString posibleAtaque = "Desconocido";
+
+    for (const auto& elem : elementosIA) {
+        if (elem->estaVivo()) {
+            if (elem->getTipo() == TipoElemento::AGUA) posibleAtaque = "Agua";
+            else if (elem->getTipo() == TipoElemento::TIERRA) posibleAtaque = "Tierra";
+            else if (elem->getTipo() == TipoElemento::FUEGO) posibleAtaque = "Fuego";
+            else if (elem->getTipo() == TipoElemento::BARRO) posibleAtaque = "Barro";
+            else if (elem->getTipo() == TipoElemento::LAVA) posibleAtaque = "Lava";
+            else if (elem->getTipo() == TipoElemento::VAPOR) posibleAtaque = "Vapor";
+            break;
+        }
+    }
+
+    QTextCursor cursor = ui->logBatalla->textCursor();
+    cursor.movePosition(QTextCursor::Start);
+    ui->logBatalla->setTextCursor(cursor);
+    ui->logBatalla->insertHtml(QString("<span style='color: #f39c12;'><b>[💡 PISTA]</b> El enemigo prepara una carta de <b>%1</b>.</span><br>").arg(posibleAtaque));
+
+    pistasRestantes--;
+    ui->btnAyudaIA->setText(QString("💡 Pista de IA (%1)").arg(pistasRestantes));
+    ui->btnAyudaIA->setEnabled(false);
 }
 
 void MainWindow::onAtacarClicked() {
@@ -404,13 +526,16 @@ void MainWindow::onAtacarClicked() {
 
 void MainWindow::onOpcionesClicked() {
     if (partida.estaTerminada()) {
-        ui->lblResultadoFin->setText(QString("¡PARTIDA FINALIZADA!\nGanador: %1").arg(partida.getGanador()));
-        ui->btnGuardarFin->setEnabled(false);
-        ui->btnContinuarPartida->setVisible(false);
+        // La imagen ya fue seteada por actualizarInterfaz()
     } else {
+        // Si el juego NO terminó y solo estamos pausando:
         ui->lblResultadoFin->setText(QString("Partida Pausada - Ronda %1").arg(partida.getRonda()));
         ui->btnGuardarFin->setEnabled(true);
         ui->btnContinuarPartida->setVisible(true);
+        ui->lblResultadoFin->setStyleSheet("color: white; background-color: rgba(0,0,0,150); border-radius: 10px; padding: 10px;");
+
+        // --- RESTAURAMOS EL FONDO NORMAL ---
+        ui->pageFin->setStyleSheet("#pageFin { border-image: url(':/imagenes/fondo juego.jpg') 0 0 0 0 stretch stretch; }");
     }
     ui->stackedWidget->setCurrentWidget(ui->pageFin);
 }

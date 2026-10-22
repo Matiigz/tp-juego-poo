@@ -11,5 +11,7 @@
         <file>imagenes/dificil_1.png</file>
         <file>imagenes/facil_1.png</file>
         <file>imagenes/normal_1.png</file>
+        <file>imagenes/victoria.png</file>
+        <file>imagenes/derrota.png</file>
     </qresource>
 </RCC>
