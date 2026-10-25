@@ -13,6 +13,7 @@
 #include <QLabel>
 #include <QPropertyAnimation>
 #include <QTextCursor>
+#include <QLineEdit> // <-- IMPORTANTE PARA EL ERROR DEL QLINEEDIT
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), partida("Jugador 1")
@@ -94,7 +95,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btnVolverReglas, &QPushButton::clicked, this, &MainWindow::onVolverReglasClicked);
     connect(ui->btnSalir, &QPushButton::clicked, this, &MainWindow::close);
 
-    // Conexiones de dificultad y modos
+    // Conexiones de dificultad, modos y nombre
+    connect(ui->txtNombreJugador, &QLineEdit::textChanged, this, &MainWindow::verificarInicioPermitido);
     connect(ui->btnDificultadAleatoria, &QPushButton::clicked, this, &MainWindow::onDificultadAleatoriaClicked);
     connect(ui->btnDificultadEstrategica, &QPushButton::clicked, this, &MainWindow::onDificultadEstrategicaClicked);
     connect(ui->btnDificultadSuperIA, &QPushButton::clicked, this, &MainWindow::onDificultadSuperIAClicked);
@@ -104,7 +106,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Navegación
     connect(ui->btnContinuarJuego, &QPushButton::clicked, this, &MainWindow::onContinuarJuegoClicked);
     connect(ui->btnVolverDificultad, &QPushButton::clicked, this, &MainWindow::onVolverDificultadClicked);
-
+    connect(ui->btnNuevaPartidaFin, &QPushButton::clicked, this, &MainWindow::onNuevaPartidaFinClicked);
     // Acciones in-game
     connect(ui->btnAtacar, &QPushButton::clicked, this, &MainWindow::onAtacarClicked);
     connect(ui->btnAyudaIA, &QPushButton::clicked, this, &MainWindow::onAyudaIAClicked);
@@ -278,12 +280,12 @@ void MainWindow::actualizarInterfaz() {
     };
 
     const auto& elementosIA = partida.getIA().getElementos();
-    for (int i = 0; i < elementosIA.size(); ++i) {
+    for (size_t i = 0; i < elementosIA.size(); ++i) { // Cambiado a size_t para evitar el Warning amarillo
         ui->layoutCartasIA->addWidget(renderizarCarta(elementosIA[i].get(), false, i, false));
     }
 
     const auto& elementosHumano = partida.getHumano().getElementos();
-    for (int i = 0; i < elementosHumano.size(); ++i) {
+    for (size_t i = 0; i < elementosHumano.size(); ++i) { // Cambiado a size_t
         bool estaSeleccionada = (i == cartaSeleccionadaIndex);
         ui->layoutCartasHumano->addWidget(renderizarCarta(elementosHumano[i].get(), true, i, estaSeleccionada));
     }
@@ -293,12 +295,16 @@ void MainWindow::actualizarInterfaz() {
         ui->lblEstadoJuego->setText("FIN DE LA PARTIDA");
         ui->btnAtacar->setEnabled(false);
         ui->btnAyudaIA->setEnabled(false);
-
+        ui->btnNuevaPartidaFin->setVisible(true);
         QString ganador = partida.getGanador();
+
+        // Si el ganador es Jugador 1, usamos el nombre personalizado visualmente
+        if(ganador == "Jugador 1") ganador = nombreJugadorActual;
+
         ui->lblResultadoFin->setText(QString("¡PARTIDA FINALIZADA!\nGanador: %1").arg(ganador));
 
-        // --- LÓGICA DE FONDO DINÁMICO DE VICTORIA / DERROTA ---
-        if (ganador == "Jugador 1") {
+        // --- LÓGICA DINÁMICA DE VICTORIA / DERROTA BASADA EN EL NOMBRE ---
+        if (ganador != "IA Bot" && ganador != "IA") {
             ui->pageFin->setStyleSheet("#pageFin { border-image: url(':/imagenes/victoria.png') 0 0 0 0 stretch stretch; }");
         } else {
             ui->pageFin->setStyleSheet("#pageFin { border-image: url(':/imagenes/derrota.png') 0 0 0 0 stretch stretch; }");
@@ -335,13 +341,18 @@ void MainWindow::onIniciarJuegoClicked() {
     ui->btnModoComun->setStyleSheet("");
     ui->btnModoMixto->setStyleSheet("");
 
+    // --- OCULTAR NOMBRE Y LABEL SI YA EXISTE ---
+    bool yaTieneNombre = !ui->txtNombreJugador->text().trimmed().isEmpty();
+    ui->lblIngresoNombre->setVisible(!yaTieneNombre);
+    ui->txtNombreJugador->setVisible(!yaTieneNombre);
+    // ------------------------------------------
+
     seleccionoDificultad = false;
     seleccionoModo = false;
-    ui->btnContinuarJuego->setEnabled(false);
+    verificarInicioPermitido();
 
     ui->stackedWidget->setCurrentWidget(ui->pageDificultad);
 }
-
 void MainWindow::resaltarBotonDificultad(QPushButton* botonActivo) {
     ui->btnDificultadAleatoria->setStyleSheet(
         "QPushButton { border-image: url(':/imagenes/facil_1.png') 0 0 0 0 stretch stretch; background-color: transparent; border: none; border-radius: 20px; }"
@@ -392,7 +403,8 @@ void MainWindow::onModoMixtoClicked() {
 }
 
 void MainWindow::verificarInicioPermitido() {
-    ui->btnContinuarJuego->setEnabled(seleccionoDificultad && seleccionoModo);
+    bool nombreValido = !ui->txtNombreJugador->text().trimmed().isEmpty() || !nombreJugadorActual.isEmpty();
+    ui->btnContinuarJuego->setEnabled(seleccionoDificultad && seleccionoModo && nombreValido);
 }
 
 void MainWindow::onContinuarJuegoClicked() {
@@ -406,6 +418,13 @@ void MainWindow::onVolverDificultadClicked() {
 // --- INICIO DE PARTIDA Y ACCIONES IN-GAME ---
 
 void MainWindow::iniciarPartidaConDificultad(TipoIA tipo) {
+    nombreJugadorActual = ui->txtNombreJugador->text().trimmed();
+    if(nombreJugadorActual.isEmpty()) nombreJugadorActual = "Jugador 1";
+
+    // ---> NUEVO: GUARDAMOS LOS PARÁMETROS ELEGIDOS COMO LOS NUEVOS "POR DEFECTO" <---
+    // (Asumimos que juegan con 3 cartas por defecto, si tu juego usa 5, ponle 5).
+    GestorConfiguracion::guardarParametrosPorDefecto("config.json", nombreJugadorActual, static_cast<int>(tipo), static_cast<int>(modoSeleccionado), 3);
+
     partida.setTipoIA(tipo);
     partida.setModoJuego(modoSeleccionado);
     partida.inicializarNuevaPartida();
@@ -435,7 +454,7 @@ void MainWindow::iniciarPartidaConDificultad(TipoIA tipo) {
     ui->lblTipoIA->setText(nombreIA + nombreModo);
 
     ui->logBatalla->clear();
-    ui->logBatalla->append("<span style='color: #2980b9;'><b>¡Que comience la batalla elemental!</b></span><br>");
+    ui->logBatalla->append(QString("<span style='color: #2980b9;'><b>¡Buena suerte, %1! ¡Que comience la batalla elemental!</b></span><br>").arg(nombreJugadorActual));
 
     actualizarInterfaz();
     ui->stackedWidget->setCurrentWidget(ui->pageJuego);
@@ -525,16 +544,12 @@ void MainWindow::onAtacarClicked() {
 }
 
 void MainWindow::onOpcionesClicked() {
-    if (partida.estaTerminada()) {
-        // La imagen ya fue seteada por actualizarInterfaz()
-    } else {
-        // Si el juego NO terminó y solo estamos pausando:
+    if (!partida.estaTerminada()) {
         ui->lblResultadoFin->setText(QString("Partida Pausada - Ronda %1").arg(partida.getRonda()));
         ui->btnGuardarFin->setEnabled(true);
         ui->btnContinuarPartida->setVisible(true);
         ui->lblResultadoFin->setStyleSheet("color: white; background-color: rgba(0,0,0,150); border-radius: 10px; padding: 10px;");
-
-        // --- RESTAURAMOS EL FONDO NORMAL ---
+        ui->btnNuevaPartidaFin->setVisible(false);
         ui->pageFin->setStyleSheet("#pageFin { border-image: url(':/imagenes/fondo juego.jpg') 0 0 0 0 stretch stretch; }");
     }
     ui->stackedWidget->setCurrentWidget(ui->pageFin);
@@ -556,5 +571,10 @@ void MainWindow::onGuardarFinClicked() {
 }
 
 void MainWindow::onVolverMenuClicked() {
+    ui->txtNombreJugador->clear(); // Limpia el nombre para pedirlo de nuevo si regresa al menú inicial
+    nombreJugadorActual = "Jugador 1";
     ui->stackedWidget->setCurrentWidget(ui->pageInicio);
+}
+void MainWindow::onNuevaPartidaFinClicked() {
+    onIniciarJuegoClicked();
 }

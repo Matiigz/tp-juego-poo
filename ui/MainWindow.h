@@ -22,7 +22,7 @@ private slots:
     void onCargarJuegoInicioClicked();
 
     void onReglasClicked();
-    void onReglasJuegoClicked();        // <- NUEVO: Abrir reglas desde el juego
+    void onReglasJuegoClicked();
     void onVolverReglasClicked();
 
     void onDificultadAleatoriaClicked();
@@ -40,7 +40,7 @@ private slots:
     void onGuardarFinClicked();
     void onVolverMenuClicked();
     void onContinuarPartidaClicked();
-
+    void onNuevaPartidaFinClicked();
     void onAyudaIAClicked();
 
 private:
@@ -55,6 +55,7 @@ private:
 
     int pistasRestantes = 0;
     QWidget* paginaAnteriorReglas = nullptr;
+    QString nombreJugadorActual = "Jugador 1"; // <- NUEVO
 
     std::map<int, int> saludAnteriorHumano;
     std::map<int, int> saludAnteriorIA;
