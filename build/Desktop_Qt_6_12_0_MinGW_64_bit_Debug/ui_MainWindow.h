@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
@@ -47,6 +48,8 @@ public:
     QWidget *pageDificultad;
     QVBoxLayout *verticalLayout_dif;
     QSpacerItem *verticalSpacer_dif1;
+    QLabel *lblIngresoNombre;
+    QLineEdit *txtNombreJugador;
     QLabel *lblTituloDificultad;
     QHBoxLayout *horizontalLayout_3;
     QPushButton *btnModoComun;
@@ -81,6 +84,7 @@ public:
     QLabel *lblResultadoFin;
     QSpacerItem *verticalSpacer_5;
     QPushButton *btnContinuarPartida;
+    QPushButton *btnNuevaPartidaFin;
     QPushButton *btnGuardarFin;
     QPushButton *btnVolverMenu;
     QSpacerItem *verticalSpacer_6;
@@ -225,6 +229,24 @@ public:
 
         verticalLayout_dif->addItem(verticalSpacer_dif1);
 
+        lblIngresoNombre = new QLabel(pageDificultad);
+        lblIngresoNombre->setObjectName("lblIngresoNombre");
+        QFont font2;
+        font2.setPointSize(12);
+        font2.setBold(true);
+        lblIngresoNombre->setFont(font2);
+        lblIngresoNombre->setAlignment(Qt::AlignmentFlag::AlignCenter);
+
+        verticalLayout_dif->addWidget(lblIngresoNombre);
+
+        txtNombreJugador = new QLineEdit(pageDificultad);
+        txtNombreJugador->setObjectName("txtNombreJugador");
+        txtNombreJugador->setMinimumSize(QSize(0, 40));
+        txtNombreJugador->setFont(font2);
+        txtNombreJugador->setAlignment(Qt::AlignmentFlag::AlignCenter);
+
+        verticalLayout_dif->addWidget(txtNombreJugador);
+
         lblTituloDificultad = new QLabel(pageDificultad);
         lblTituloDificultad->setObjectName("lblTituloDificultad");
         lblTituloDificultad->setFont(font1);
@@ -293,10 +315,10 @@ public:
         verticalLayout_3->setObjectName("verticalLayout_3");
         lblEstadoJuego = new QLabel(pageJuego);
         lblEstadoJuego->setObjectName("lblEstadoJuego");
-        QFont font2;
-        font2.setPointSize(14);
-        font2.setBold(true);
-        lblEstadoJuego->setFont(font2);
+        QFont font3;
+        font3.setPointSize(14);
+        font3.setBold(true);
+        lblEstadoJuego->setFont(font3);
         lblEstadoJuego->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         verticalLayout_3->addWidget(lblEstadoJuego);
@@ -307,9 +329,9 @@ public:
         layoutCartas->setObjectName("layoutCartas");
         lblIA = new QLabel(pageJuego);
         lblIA->setObjectName("lblIA");
-        QFont font3;
-        font3.setBold(true);
-        lblIA->setFont(font3);
+        QFont font4;
+        font4.setBold(true);
+        lblIA->setFont(font4);
 
         layoutCartas->addWidget(lblIA);
 
@@ -320,7 +342,7 @@ public:
 
         lblHumano = new QLabel(pageJuego);
         lblHumano->setObjectName("lblHumano");
-        lblHumano->setFont(font3);
+        lblHumano->setFont(font4);
 
         layoutCartas->addWidget(lblHumano);
 
@@ -336,10 +358,10 @@ public:
         layoutLog->setObjectName("layoutLog");
         lblTipoIA = new QLabel(pageJuego);
         lblTipoIA->setObjectName("lblTipoIA");
-        QFont font4;
-        font4.setPointSize(11);
-        font4.setBold(true);
-        lblTipoIA->setFont(font4);
+        QFont font5;
+        font5.setPointSize(11);
+        font5.setBold(true);
+        lblTipoIA->setFont(font5);
         lblTipoIA->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
         layoutLog->addWidget(lblTipoIA);
@@ -412,6 +434,12 @@ public:
 
         verticalLayout_4->addWidget(btnContinuarPartida);
 
+        btnNuevaPartidaFin = new QPushButton(pageFin);
+        btnNuevaPartidaFin->setObjectName("btnNuevaPartidaFin");
+        btnNuevaPartidaFin->setMinimumSize(QSize(0, 45));
+
+        verticalLayout_4->addWidget(btnNuevaPartidaFin);
+
         btnGuardarFin = new QPushButton(pageFin);
         btnGuardarFin->setObjectName("btnGuardarFin");
         btnGuardarFin->setMinimumSize(QSize(0, 45));
@@ -436,7 +464,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -448,30 +476,40 @@ public:
         lblTitulo->setText(QCoreApplication::translate("MainWindow", "\302\241<span style=\"color: #2980b9;\">Agua</span>, <span style=\"color: #27ae60;\">Tierra</span> y <span style=\"color: #c0392b;\">Fuego</span>!", nullptr));
         btnIniciarJuego->setText(QCoreApplication::translate("MainWindow", "Iniciar Nueva Partida", nullptr));
         btnCargarJuegoInicio->setText(QCoreApplication::translate("MainWindow", "Cargar Partida Existente", nullptr));
-        btnReglas->setText(QCoreApplication::translate("MainWindow", "Ver Reglas del Juego", nullptr));
         btnReglas->setStyleSheet(QCoreApplication::translate("MainWindow", "background-color: #8e44ad; border: 2px solid #9b59b6;", nullptr));
+        btnReglas->setText(QCoreApplication::translate("MainWindow", "Ver Reglas del Juego", nullptr));
         btnSalir->setText(QCoreApplication::translate("MainWindow", "Salir del Juego", nullptr));
-        lblTituloReglas->setText(QCoreApplication::translate("MainWindow", "Reglas del Juego", nullptr));
         lblTituloReglas->setStyleSheet(QCoreApplication::translate("MainWindow", "color: white; background-color: rgba(0,0,0,150); padding: 10px; border-radius: 10px;", nullptr));
+        lblTituloReglas->setText(QCoreApplication::translate("MainWindow", "Reglas del Juego", nullptr));
         txtReglas->setStyleSheet(QCoreApplication::translate("MainWindow", "background-color: rgba(255, 255, 255, 230); border-radius: 10px; padding: 15px; font-size: 14px;", nullptr));
-        txtReglas->setHtml(QCoreApplication::translate("MainWindow", "<h2 style=\"color:#2c3e50;\">Din\303\241mica B\303\241sica</h2>\n"
-"<p>El juego es un combate estrat\303\251gico de cartas elementales. Cada jugador elige una carta viva para atacar, y el da\303\261o depender\303\241 de las debilidades y fortalezas de cada elemento.</p>\n"
-"<h3 style=\"color:#2980b9;\">Elementos Comunes (Tri\303\241ngulo de poder)</h3>\n"
-"<ul>\n"
-"<li><b style=\"color:#c0392b;\">Fuego</b> quema a la <b style=\"color:#27ae60;\">Tierra</b> (Da\303\261o x2)</li>\n"
-"<li><b style=\"color:#27ae60;\">Tierra</b> absorbe al <b style=\"color:#2980b9;\">Agua</b> (Da\303\261o x2)</li>\n"
-"<li><b style=\"color:#2980b9;\">Agua</b> apaga al <b style=\"color:#c0392b;\">Fuego</b> (Da\303\261o x2)</li>\n"
-"</ul>\n"
-"<h3 style=\"color:#8e44ad;\">Elementos Mixtos</h3>\n"
-"<p>Los elementos mixtos combinan ataques y defensas de dos elementos comunes:</p>\n"
-"<ul>\n"
-"<li><b>Lava</b>: Ataca como Fuego, defiende como Tierra.</li>\n"
-"<li><b>Barro</b>: Ataca como Tierra, defiende como Agua.</li>\n"
-"<li><b>Vapor</b>"
-                        ": Ataca como Agua, defiende como Fuego.</li>\n"
-"</ul>\n"
-"<p>\302\241Planea tus movimientos y usa la <b>Pista de IA</b> sabiamente para anticiparte a los ataques de tu enemigo!</p>", nullptr));
+        txtReglas->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:14px; font-weight:400; font-style:normal;\">\n"
+"<h2 style=\" margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:x-large; font-weight:700; color:#2c3e50;\">Din\303\241mica B\303\241sica</span></h2>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">El juego es un combate estrat\303\251gico de cartas elementales. Cada jugador elige una carta viva para atacar, y el da\303\261o depender\303\241 de las debilidade"
+                        "s y fortalezas de cada elemento.</p>\n"
+"<h3 style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:large; font-weight:700; color:#2980b9;\">Elementos Comunes (Tri\303\241ngulo de poder)</span></h3>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\">\n"
+"<li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#c0392b;\">Fuego</span> quema a la <span style=\" font-weight:700; color:#27ae60;\">Tierra</span> (Da\303\261o x2)</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#27ae60;\">Tierra</span> absorbe al <span style=\" font-weight:700; color:#2980b9;\">Agua</span> (Da\303\261o x2)</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:12px; ma"
+                        "rgin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#2980b9;\">Agua</span> apaga al <span style=\" font-weight:700; color:#c0392b;\">Fuego</span> (Da\303\261o x2)</li></ul>\n"
+"<h3 style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:large; font-weight:700; color:#8e44ad;\">Elementos Mixtos</span></h3>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Los elementos mixtos combinan ataques y defensas de dos elementos comunes:</p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\">\n"
+"<li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">Lava</span>: Ataca como Fuego, defiende como Tierra.</li>\n"
+"<li style=\" margin-top:0px; "
+                        "margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">Barro</span>: Ataca como Tierra, defiende como Agua.</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">Vapor</span>: Ataca como Agua, defiende como Fuego.</li></ul>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\302\241Planea tus movimientos y usa la <span style=\" font-weight:700;\">Pista de IA</span> sabiamente para anticiparte a los ataques de tu enemigo!</p></body></html>", nullptr));
         btnVolverReglas->setText(QCoreApplication::translate("MainWindow", "Volver", nullptr));
+        lblIngresoNombre->setText(QCoreApplication::translate("MainWindow", "Ingresa tu Nombre de Jugador:", nullptr));
+        txtNombreJugador->setStyleSheet(QCoreApplication::translate("MainWindow", "background-color: rgba(255, 255, 255, 220); border-radius: 10px; padding: 5px; color: black;", nullptr));
+        txtNombreJugador->setPlaceholderText(QCoreApplication::translate("MainWindow", "Escribe tu nombre aqu\303\255...", nullptr));
         lblTituloDificultad->setText(QCoreApplication::translate("MainWindow", "Selecciona la Dificultad de la IA", nullptr));
         btnModoComun->setText(QCoreApplication::translate("MainWindow", "Modo Com\303\272n", nullptr));
         btnModoMixto->setText(QCoreApplication::translate("MainWindow", "Modo Mixto", nullptr));
@@ -494,6 +532,8 @@ public:
         btnReglasJuego->setText(QCoreApplication::translate("MainWindow", "Ver Reglas", nullptr));
         btnOpciones->setText(QCoreApplication::translate("MainWindow", "Pausar / Guardar", nullptr));
         btnContinuarPartida->setText(QCoreApplication::translate("MainWindow", "Continuar Partida", nullptr));
+        btnNuevaPartidaFin->setStyleSheet(QCoreApplication::translate("MainWindow", "background-color: #27ae60; color: white;", nullptr));
+        btnNuevaPartidaFin->setText(QCoreApplication::translate("MainWindow", "Iniciar Nueva Partida", nullptr));
         btnGuardarFin->setText(QCoreApplication::translate("MainWindow", "Guardar Partida", nullptr));
         btnVolverMenu->setText(QCoreApplication::translate("MainWindow", "Volver al Men\303\272 Principal", nullptr));
     } // retranslateUi
