@@ -55,7 +55,7 @@ private:
 
     int pistasRestantes = 0;
     QWidget* paginaAnteriorReglas = nullptr;
-    QString nombreJugadorActual = "Jugador 1"; // <- NUEVO
+    QString nombreJugadorActual = "Jugador 1"; 
 
     std::map<int, int> saludAnteriorHumano;
     std::map<int, int> saludAnteriorIA;
