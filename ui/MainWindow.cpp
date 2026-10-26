@@ -13,14 +13,14 @@
 #include <QLabel>
 #include <QPropertyAnimation>
 #include <QTextCursor>
-#include <QLineEdit> // <-- IMPORTANTE PARA EL ERROR DEL QLINEEDIT
+#include <QLineEdit> 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), partida("Jugador 1")
 {
     ui->setupUi(this);
 
-    // --- MAGIA DEL FONDO ---
+    
     ui->pageJuego->setAttribute(Qt::WA_StyledBackground, true);
     ui->pageFin->setAttribute(Qt::WA_StyledBackground, true);
     ui->pageDificultad->setAttribute(Qt::WA_StyledBackground, true);
@@ -32,9 +32,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pageReglas->setStyleSheet("#pageReglas { border-image: url(':/imagenes/fondo juego.jpg') 0 0 0 0 stretch stretch; }");
 
     ui->logBatalla->setStyleSheet("background-color: rgba(255, 255, 255, 220); border-radius: 8px; color: black;");
-    // ----------------------------
+ 
 
-    // --- ESTILO DE LOS BOTONES DE DIFICULTAD (PERSONALIZADOS) ---
+   
     ui->btnDificultadAleatoria->setFixedSize(300, 95);
     ui->btnDificultadAleatoria->setText("");
     ui->btnDificultadAleatoria->setStyleSheet(
@@ -82,7 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
         layoutDificultad->setAlignment(ui->btnDificultadEstrategica, Qt::AlignHCenter);
         layoutDificultad->setAlignment(ui->btnDificultadSuperIA, Qt::AlignHCenter);
     }
-    // -------------------------------------------------------------
+
 
     GestorConfiguracion::cargarConfiguracion("config.json", partida);
     ui->stackedWidget->setCurrentWidget(ui->pageInicio);
@@ -280,12 +280,12 @@ void MainWindow::actualizarInterfaz() {
     };
 
     const auto& elementosIA = partida.getIA().getElementos();
-    for (size_t i = 0; i < elementosIA.size(); ++i) { // Cambiado a size_t para evitar el Warning amarillo
+    for (size_t i = 0; i < elementosIA.size(); ++i) { 
         ui->layoutCartasIA->addWidget(renderizarCarta(elementosIA[i].get(), false, i, false));
     }
 
     const auto& elementosHumano = partida.getHumano().getElementos();
-    for (size_t i = 0; i < elementosHumano.size(); ++i) { // Cambiado a size_t
+    for (size_t i = 0; i < elementosHumano.size(); ++i) { 
         bool estaSeleccionada = (i == cartaSeleccionadaIndex);
         ui->layoutCartasHumano->addWidget(renderizarCarta(elementosHumano[i].get(), true, i, estaSeleccionada));
     }
@@ -322,7 +322,7 @@ void MainWindow::actualizarInterfaz() {
     }
 }
 
-// --- LOGICA DEL MENÚ DE DIFICULTAD Y MODOS ---
+
 
 void MainWindow::onIniciarJuegoClicked() {
     ui->btnDificultadAleatoria->setStyleSheet(
@@ -421,8 +421,7 @@ void MainWindow::iniciarPartidaConDificultad(TipoIA tipo) {
     nombreJugadorActual = ui->txtNombreJugador->text().trimmed();
     if(nombreJugadorActual.isEmpty()) nombreJugadorActual = "Jugador 1";
 
-    // ---> NUEVO: GUARDAMOS LOS PARÁMETROS ELEGIDOS COMO LOS NUEVOS "POR DEFECTO" <---
-    // (Asumimos que juegan con 3 cartas por defecto, si tu juego usa 5, ponle 5).
+    
     GestorConfiguracion::guardarParametrosPorDefecto("config.json", nombreJugadorActual, static_cast<int>(tipo), static_cast<int>(modoSeleccionado), 3);
 
     partida.setTipoIA(tipo);
