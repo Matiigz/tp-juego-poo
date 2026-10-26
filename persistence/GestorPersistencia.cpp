@@ -7,13 +7,12 @@
 
 bool GestorPersistencia::guardarPartida(const QString& rutaArchivo, const Partida& partida) {
     QFile file(rutaArchivo);
-    // Se abre en modo WriteOnly (por defecto en Qt esto es binario si no se usa QIODevice::Text)
+    
     if (!file.open(QIODevice::WriteOnly)) return false;
 
     QDataStream out(&file);
-    out.setVersion(QDataStream::Qt_6_0); // Asegura compatibilidad
-
-    // Guardar datos básicos
+    out.setVersion(QDataStream::Qt_6_0); 
+    
     out << partida.getRonda();
     out << partida.getElementosPorJugador();
     out << static_cast<int>(partida.getTipoIA());
@@ -27,7 +26,7 @@ bool GestorPersistencia::guardarPartida(const QString& rutaArchivo, const Partid
         }
     };
 
-    // Guardar humano y luego IA
+   
     serializarJugador(const_cast<Partida&>(partida).getHumano());
     serializarJugador(const_cast<Partida&>(partida).getIA());
 
