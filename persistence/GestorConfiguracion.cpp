@@ -41,18 +41,18 @@ bool GestorConfiguracion::cargarConfiguracion(const QString& rutaArchivo, Partid
 void GestorConfiguracion::guardarParametrosPorDefecto(const QString& rutaArchivo, const QString& nombreJugador, int modoIA, int modoJuego, int cantidadCartas) {
     QJsonObject json;
 
-    // Guardamos las "Variables del juego" que pidió el profesor
+   
     json["nombre_jugador_defecto"] = nombreJugador;
     json["modo_ia_defecto"] = modoIA;
     json["modo_juego_defecto"] = modoJuego;
     json["cantidad_cartas"] = cantidadCartas;
     json["vida_inicial_cartas"] = 100;
 
-    // Escribimos el archivo config.json
+   
     QJsonDocument doc(json);
     QFile file(rutaArchivo);
     if (file.open(QIODevice::WriteOnly)) {
-        // Usamos Indented para que el JSON quede ordenado y el profe lo pueda leer si abre el archivo
+       
         file.write(doc.toJson(QJsonDocument::Indented));
         file.close();
     }
