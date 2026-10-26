@@ -3,7 +3,7 @@
 
 #include "Elemento.h"
 
-// BARRO: Ataca como AGUA, Defiende como TIERRA
+
 class Barro : public Elemento {
 public:
     Barro() : Elemento(TipoElemento::BARRO) {}
@@ -12,7 +12,7 @@ public:
     TipoElemento getTipoDefensa() const override { return TipoElemento::TIERRA; }
 };
 
-// LAVA: Ataca como FUEGO, Defiende como TIERRA
+
 class Lava : public Elemento {
 public:
     Lava() : Elemento(TipoElemento::LAVA) {}
@@ -21,7 +21,7 @@ public:
     TipoElemento getTipoDefensa() const override { return TipoElemento::TIERRA; }
 };
 
-// VAPOR: Ataca como FUEGO, Defiende como AGUA
+
 class Vapor : public Elemento {
 public:
     Vapor() : Elemento(TipoElemento::VAPOR) {}
